@@ -1,0 +1,20 @@
+// =============================================================================
+// Wrap modifiers
+// -----------------------------------------------------------------------------
+// Set the --wrap knob (flex-wrap) on cluster and split. Use .lr-nowrap to keep
+// a row on a single line, or .lr-wrap-reverse to wrap upward.
+// =============================================================================
+
+@layer lrlayout.modifiers {
+  .lr-wrap {
+    --wrap: wrap;
+  }
+
+  .lr-nowrap {
+    --wrap: nowrap;
+  }
+
+  .lr-wrap-reverse {
+    --wrap: wrap-reverse;
+  }
+}

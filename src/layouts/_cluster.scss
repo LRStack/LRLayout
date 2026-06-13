@@ -1,0 +1,22 @@
+// =============================================================================
+// Cluster
+// -----------------------------------------------------------------------------
+// A group of items with even gaps that wraps gracefully — tags, button groups,
+// inline nav. Items keep their intrinsic size and flow onto new lines as space
+// runs out.
+//
+// Knobs: --gap, --items (align-items), --justify (justify-content), --wrap,
+//        --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-cluster {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: var(--wrap, wrap);
+    gap: var(--gap, var(--lr-space-md));
+    align-items: var(--items, center);
+    justify-content: var(--justify, flex-start);
+    padding: var(--pad, 0);
+  }
+}

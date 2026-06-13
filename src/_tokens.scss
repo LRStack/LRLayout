@@ -1,0 +1,61 @@
+// =============================================================================
+// Tokens
+// -----------------------------------------------------------------------------
+// The single source of truth for LRLayout's design tokens:
+//   1. the spacing scale (emitted as --lr-space-* custom properties), and
+//   2. the "knob" custom properties every layout reads.
+// =============================================================================
+
+// Establish the cascade-layer order once, up front, so every rule in the
+// library lands in the right layer regardless of load order. This lives in the
+// first-loaded module so it is the earliest CSS emitted. Unlayered consumer CSS
+// always beats anything in these layers — overriding the library needs no
+// specificity battle.
+@layer lrlayout.tokens, lrlayout.layouts, lrlayout.modifiers;
+
+// --- Spacing scale -----------------------------------------------------------
+// A fixed rem scale. This map is the source of truth: it emits the
+// --lr-space-* custom properties below and drives the generated gap/pad
+// modifier classes (see modifiers/_gap.scss, modifiers/_pad.scss).
+$space: (
+  "0": 0,
+  "xs": 0.25rem,
+  "sm": 0.5rem,
+  "md": 1rem,
+  "lg": 1.5rem,
+  "xl": 2rem,
+  "2xl": 3rem,
+);
+
+// --- Knobs -------------------------------------------------------------------
+// Every per-instance setting flows through one of these custom properties, so a
+// value can be driven either by a modifier class (e.g. .lr-gap-lg) or inline
+// (style="--gap: 2rem") and both reach the same var(--gap).
+//
+// They are registered with `inherits: false` so a knob set on one layout does
+// NOT leak into a nested layout. No `initial-value` is given: an unset knob is
+// therefore "invalid at computed-value time", which makes var(--gap, <fallback>)
+// resolve cleanly to each layout's own literal fallback.
+//
+// These @property rules sit OUTSIDE the cascade layers on purpose: registration
+// is global and unaffected by the cascade.
+$knobs: gap, pad, items, justify, wrap, ratio, object, side, content-min, min,
+  cols, sticky-top, gutter;
+
+@each $knob in $knobs {
+  @property --#{$knob} {
+    syntax: "*";
+    inherits: false;
+  }
+}
+
+// --- Emit the spacing scale --------------------------------------------------
+// In the tokens layer so a consumer can retune the scale with a plain,
+// unlayered :root override.
+@layer lrlayout.tokens {
+  :root {
+    @each $name, $value in $space {
+      --lr-space-#{$name}: #{$value};
+    }
+  }
+}

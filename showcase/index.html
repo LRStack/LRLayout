@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LRLayout · CSS layout primitives</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html" aria-current="page">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>LRLayout</h1>
+      <p>A collection of CSS layout classes. Responsiveness built in.</p>
+      <div class="lr-cluster lr-justify-center lr-gap-sm" style="margin-top: 1.5rem">
+        <a class="btn" href="#primitives">Explore the primitives</a>
+        <a class="btn btn--ghost" href="combined.html">See it all together</a>
+      </div>
+    </section>
+
+    <main class="page lr-stack lr-gap-xl">
+      <section id="primitives" class="lr-stack lr-gap-md">
+        <p class="section-label">The primitives</p>
+        <div class="lr-grid">
+          <a class="tile" href="cluster.html">
+            <h3><code>cluster</code></h3>
+            <p>Even-gapped items that wrap. The go-to for most rows.</p>
+          </a>
+          <a class="tile" href="stack.html">
+            <h3><code>stack</code></h3>
+            <p>Vertical rhythm between stacked children.</p>
+          </a>
+          <a class="tile" href="split.html">
+            <h3><code>split</code></h3>
+            <p>Two (or more) zones pushed to the edges.</p>
+          </a>
+          <a class="tile" href="frame.html">
+            <h3><code>frame</code></h3>
+            <p>Fixed aspect-ratio media, cropped to fit.</p>
+          </a>
+          <a class="tile" href="flank.html">
+            <h3><code>flank</code></h3>
+            <p>A sidebar beside a flexible main region.</p>
+          </a>
+          <a class="tile" href="grid.html">
+            <h3><code>grid</code></h3>
+            <p>Auto-fitting responsive columns.</p>
+          </a>
+        </div>
+      </section>
+
+      <section id="combined" class="lr-stack lr-gap-md">
+        <p class="section-label">Everything together</p>
+        <a class="tile" href="combined.html">
+          <h3>A full page, built only from primitives →</h3>
+          <p>
+            A <code>flank</code> shell, <code>split</code> bars, stacked content,
+            a <code>cluster</code> of filters, a <code>scroll-x</code> reel, a
+            <code>grid</code> gallery of <code>frame</code> thumbnails, and a
+            <code>sticky</code> sidebar. See the complete example.
+          </p>
+        </a>
+      </section>
+
+      <footer class="page-foot">
+        Built with LRLayout. Browse the
+        <a href="cluster.html">primitives</a> to see each one on its own.
+      </footer>
+    </main>
+  </body>
+</html>

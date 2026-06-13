@@ -1,0 +1,24 @@
+// =============================================================================
+// Items modifiers
+// -----------------------------------------------------------------------------
+// Set the --items knob (align-items — cross-axis alignment) on cluster, split,
+// and flank, e.g. .lr-items-center.
+// =============================================================================
+
+@use "sass:map";
+
+$items: (
+  "start": flex-start,
+  "center": center,
+  "end": flex-end,
+  "stretch": stretch,
+  "baseline": baseline,
+);
+
+@layer lrlayout.modifiers {
+  @each $name, $value in $items {
+    .lr-items-#{$name} {
+      --items: #{$value};
+    }
+  }
+}

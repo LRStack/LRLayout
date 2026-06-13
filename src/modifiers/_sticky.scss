@@ -1,0 +1,17 @@
+// =============================================================================
+// Sticky modifier
+// -----------------------------------------------------------------------------
+// Pin an element as it scrolls. --sticky-top sets the offset (default 0).
+//
+// `align-self: start` is included so a sticky element inside a flex layout (e.g.
+// a flank sidebar) is not stretched to the container's full height — a
+// full-height item has nothing to stick within and would never pin.
+// =============================================================================
+
+@layer lrlayout.modifiers {
+  .lr-sticky {
+    position: sticky;
+    top: var(--sticky-top, 0);
+    align-self: start;
+  }
+}

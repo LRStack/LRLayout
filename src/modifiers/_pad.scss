@@ -1,0 +1,20 @@
+// =============================================================================
+// Pad modifiers
+// -----------------------------------------------------------------------------
+// Set the --pad knob from the spacing scale, e.g. .lr-pad-md. Every layout
+// applies `padding: var(--pad, 0)`, so this adds inner spacing to any of them.
+// Generated from the single-source $space map.
+//
+//   <div class="lr-stack lr-pad-md"> … </div>     →  --pad: var(--lr-space-md)
+// =============================================================================
+
+@use "sass:map";
+@use "../tokens";
+
+@layer lrlayout.modifiers {
+  @each $name in map.keys(tokens.$space) {
+    .lr-pad-#{$name} {
+      --pad: var(--lr-space-#{$name});
+    }
+  }
+}

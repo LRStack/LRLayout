@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>grid · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html" aria-current="page">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-stack lr-gap-xl">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>grid</h1>
+        <p class="lead">
+          A responsive grid that auto-fits as many columns as will hold a minimum
+          column width (<code>--min</code>), then reflows the count as the
+          container resizes — again without media queries.
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Auto-fit gallery</h2>
+          <p class="note">
+            A plain <code>.lr-grid</code> with the default 16rem minimum. Resize
+            the window — the column count changes on its own.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-grid">
+            <div class="card">
+              <div class="lr-frame"><img src="img/sample-1.svg" alt="" /></div>
+              <div class="card__body">
+                <p class="card__title">Northern lights</p>
+                <p class="card__text">Long-exposure over the fjord.</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="lr-frame"><img src="img/sample-2.svg" alt="" /></div>
+              <div class="card__body">
+                <p class="card__title">Tidal pool</p>
+                <p class="card__text">Shot at low tide, blue hour.</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="lr-frame"><img src="img/sample-3.svg" alt="" /></div>
+              <div class="card__body">
+                <p class="card__title">Desert dusk</p>
+                <p class="card__text">Last light on the dunes.</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="lr-frame"><img src="img/sample-4.svg" alt="" /></div>
+              <div class="card__body">
+                <p class="card__title">Forest canopy</p>
+                <p class="card__text">Looking up through the pines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Smaller minimum, more columns</h2>
+          <p class="note">
+            Drop <code>--min</code> to pack in more, narrower columns — handy for
+            compact tiles.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-grid" style="--min: 8rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">7</div>
+            <div class="box">8</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Fixed column count</h2>
+          <p class="note">
+            Set <code>--cols</code> to a number for a fixed-column grid that
+            still shares width evenly — here three columns regardless of width.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-grid" style="--cols: 3">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

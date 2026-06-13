@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>split · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html" aria-current="page">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-stack lr-gap-xl">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>split</h1>
+        <p class="lead">
+          Pushes children apart to opposite ends of the row. The common case is
+          two zones — a logo on the left, actions on the right — but it works for
+          any number of items, distributing the space between them. Wraps to
+          stacked when the row gets too tight.
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Two zones</h2>
+          <p class="note">
+            The classic header bar: a brand pinned left, a cluster of actions
+            pinned right, via <code>justify-content: space-between</code>.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-split">
+            <div class="box">Logo</div>
+            <div class="lr-cluster lr-gap-sm">
+              <button class="btn btn--ghost">Docs</button>
+              <button class="btn btn--ghost">Pricing</button>
+              <button class="btn">Sign in</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>More than two</h2>
+          <p class="note">
+            With several children the free space is shared evenly between them —
+            the first hugs the start edge, the last hugs the end.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-split">
+            <div class="box">One</div>
+            <div class="box">Two</div>
+            <div class="box">Three</div>
+            <div class="box">Four</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Wraps when cramped</h2>
+          <p class="note">
+            No media queries — when the two zones can no longer fit side by side
+            they wrap onto separate lines.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="callout lr-cluster lr-items-baseline lr-gap-sm">
+            Narrow the window to watch these wrap.
+          </p>
+          <div class="lr-split">
+            <div class="box">Account settings</div>
+            <div class="lr-cluster lr-gap-sm">
+              <button class="btn btn--ghost">Reset</button>
+              <button class="btn">Save</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>flank · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html" aria-current="page">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-stack lr-gap-xl">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>flank</h1>
+        <p class="lead">
+          A sidebar flanking a flexible main region. The sidebar takes an
+          intrinsic width while the main region fills the rest; once the main
+          region can no longer hold at least <code>--content-min</code> of the
+          row, the two wrap to stacked — no media queries.
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Sidebar + main</h2>
+          <p class="note">
+            A plain <code>.lr-flank</code>. The first child is the sidebar
+            (<code>--side</code> wide), the second fills the rest.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="callout lr-cluster lr-items-baseline lr-gap-sm">
+            Narrow the window until the sidebar drops below the main region.
+          </p>
+          <div class="lr-flank">
+            <div class="panel">Sidebar</div>
+            <div class="panel panel--main">Main content</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Sidebar on the other side</h2>
+          <p class="note">
+            <code>.lr-flank-end</code> moves the sidebar to the trailing edge —
+            without touching the source order.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-flank lr-flank-end">
+            <div class="panel panel--main">Main content</div>
+            <div class="panel">Sidebar</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Tuned width &amp; wrap point</h2>
+          <p class="note">
+            <code>--side</code> sets the sidebar width and
+            <code>--content-min</code> the threshold at which it wraps. Here a
+            narrow 10rem rail that wraps only once the main region would dip below
+            70%.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-flank" style="--side: 10rem; --content-min: 70%">
+            <div class="panel">Rail</div>
+            <div class="panel panel--main">Main content</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Sticky sidebar</h2>
+          <p class="note">
+            Add <code>.lr-sticky</code> to the sidebar and it pins in place while
+            the main column scrolls past — scroll inside the panel below. The
+            modifier's <code>align-self: start</code> keeps the rail from
+            stretching to full height, which is what gives it room to pin.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="scrollbox lr-scroll-y">
+            <div
+              class="lr-flank lr-pad-sm"
+              style="--side: 10rem; --content-min: 60%"
+            >
+              <aside class="panel lr-sticky" style="--sticky-top: 0.75rem">
+                Sticky rail
+              </aside>
+              <div class="lr-stack lr-gap-sm">
+                <div class="box">Row 1</div>
+                <div class="box">Row 2</div>
+                <div class="box">Row 3</div>
+                <div class="box">Row 4</div>
+                <div class="box">Row 5</div>
+                <div class="box">Row 6</div>
+                <div class="box">Row 7</div>
+                <div class="box">Row 8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

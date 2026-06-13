@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Acme · Dashboard</title>
+        <link rel="stylesheet" href="../dist/lrlayout.css" />
+        <link rel="stylesheet" href="showcase.css" />
+    </head>
+    <body>
+        <div
+            class="app-shell lr-flank lr-pad-md"
+            style="--side: 13rem; --content-min: 62%"
+        >
+            <aside class="app-sidebar lr-stack lr-gap-md lr-pad-md">
+                <span class="brand">Acme</span>
+                <nav class="lr-stack lr-gap-xs" aria-label="Main">
+                    <a class="app-link" href="#" aria-current="page">Dashboard</a>
+                    <a class="app-link" href="#">Projects</a>
+                    <a class="app-link" href="#">Members</a>
+                    <a class="app-link" href="#">Reports</a>
+                    <a class="app-link" href="#">Settings</a>
+                </nav>
+            </aside>
+
+            <div class="lr-stack lr-gap-lg">
+                <header class="lr-split lr-items-center">
+                    <h1 class="app-title">Dashboard</h1>
+                    <div class="lr-cluster lr-gap-sm">
+                        <button class="btn btn--ghost">Invite</button>
+                        <button class="btn">New project</button>
+                    </div>
+                </header>
+
+                <div class="lr-cluster lr-gap-sm">
+                    <span class="chip">All</span>
+                    <span class="chip">Active</span>
+                    <span class="chip">Archived</span>
+                    <span class="chip">Shared</span>
+                    <span class="chip">Starred</span>
+                </div>
+
+                <div class="lr-stack lr-gap-sm">
+                    <p class="section-label">Recent</p>
+                    <div class="lr-cluster lr-scroll-x lr-gap-sm lr-pad-sm">
+                        <div class="box">Item 1</div>
+                        <div class="box">Item 2</div>
+                        <div class="box">Item 3</div>
+                        <div class="box">Item 4</div>
+                        <div class="box">Item 5</div>
+                        <div class="box">Item 6</div>
+                        <div class="box">Item 7</div>
+                        <div class="box">Item 8</div>
+                        <div class="box">Item 9</div>
+                        <div class="box">Item 10</div>
+                    </div>
+                </div>
+
+                <div class="lr-stack lr-gap-sm">
+                    <p class="section-label">Projects</p>
+                    <div class="lr-grid" style="--min: 12rem">
+                        <div class="card">
+                            <div class="lr-frame">
+                                <img src="img/sample-1.svg" alt="" />
+                            </div>
+                            <div class="card__body">
+                                <p class="card__title">Aurora</p>
+                                <p class="card__text">Updated 2h ago</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="lr-frame">
+                                <img src="img/sample-2.svg" alt="" />
+                            </div>
+                            <div class="card__body">
+                                <p class="card__title">Tidewater</p>
+                                <p class="card__text">Updated yesterday</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="lr-frame">
+                                <img src="img/sample-3.svg" alt="" />
+                            </div>
+                            <div class="card__body">
+                                <p class="card__title">Dunes</p>
+                                <p class="card__text">Updated 3d ago</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="lr-frame">
+                                <img src="img/sample-4.svg" alt="" />
+                            </div>
+                            <div class="card__body">
+                                <p class="card__title">Canopy</p>
+                                <p class="card__text">Updated last week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="lr-split lr-items-center">
+                    <span class="card__text">© 2026 Acme, Inc.</span>
+                    <div class="lr-cluster lr-gap-sm">
+                        <a class="nav-link" href="#">Privacy</a>
+                        <a class="nav-link" href="#">Terms</a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>cluster · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html" aria-current="page">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-stack lr-gap-xl">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>cluster</h1>
+        <p class="lead">
+          Groups items with even gaps that wrap gracefully — and it's the go-to
+          primitive for most layouts, so reach for it first. Built on
+          <code>flex-wrap</code> + <code>gap</code>, items keep their size and
+          flow onto new lines as space runs out.
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Any elements, evenly spaced</h2>
+          <p class="note">
+            Cluster is the workhorse — reach for it first. Drop in <em>any</em>
+            elements (here, plain rectangles) and they sit in a row with even
+            gaps, wrapping onto new lines when space runs out.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-cluster">
+            <div class="box">Item 1</div>
+            <div class="box">Item 2</div>
+            <div class="box">Item 3</div>
+            <div class="box">Item 4</div>
+            <div class="box">Item 5</div>
+            <div class="box">Item 6</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Wrapping tag list</h2>
+          <p class="note">
+            A plain <code>.lr-cluster</code>. Narrow the window — items reflow
+            onto new lines while the gaps stay even.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-cluster">
+            <span class="chip">design</span>
+            <span class="chip">engineering</span>
+            <span class="chip">research</span>
+            <span class="chip">product</span>
+            <span class="chip">marketing</span>
+            <span class="chip">operations</span>
+            <span class="chip">finance</span>
+            <span class="chip">legal</span>
+            <span class="chip">support</span>
+            <span class="chip">data science</span>
+            <span class="chip">growth</span>
+            <span class="chip">security</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Gap scale</h2>
+          <p class="note">
+            Identical markup — only the <code>--gap</code> knob changes, set here
+            by the gap modifier classes.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-gap-xs</span>
+          <div class="lr-cluster lr-gap-xs">
+            <span class="chip">one</span>
+            <span class="chip">two</span>
+            <span class="chip">three</span>
+            <span class="chip">four</span>
+            <span class="chip">five</span>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-gap-md &nbsp;(default)</span>
+          <div class="lr-cluster lr-gap-md">
+            <span class="chip">one</span>
+            <span class="chip">two</span>
+            <span class="chip">three</span>
+            <span class="chip">four</span>
+            <span class="chip">five</span>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-gap-xl</span>
+          <div class="lr-cluster lr-gap-xl">
+            <span class="chip">one</span>
+            <span class="chip">two</span>
+            <span class="chip">three</span>
+            <span class="chip">four</span>
+            <span class="chip">five</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Alignment &amp; a button bar</h2>
+          <p class="note">
+            <code>--justify</code> distributes along the row and
+            <code>--items</code> aligns across it, both driven by modifier
+            classes.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-cluster.lr-justify-start &nbsp;(default)</span>
+          <div class="lr-cluster">
+            <button class="btn">Save</button>
+            <button class="btn btn--ghost">Cancel</button>
+            <button class="btn btn--ghost">More…</button>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-cluster.lr-justify-center</span>
+          <div class="lr-cluster lr-justify-center">
+            <button class="btn">Save</button>
+            <button class="btn btn--ghost">Cancel</button>
+            <button class="btn btn--ghost">More…</button>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">.lr-cluster.lr-justify-end</span>
+          <div class="lr-cluster lr-justify-end">
+            <button class="btn">Save</button>
+            <button class="btn btn--ghost">Cancel</button>
+            <button class="btn btn--ghost">More…</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+// =============================================================================
+// Scroll modifiers
+// -----------------------------------------------------------------------------
+// Turn any layout into a scroll container. Unlike the other modifiers these set
+// a real property (overflow) rather than a knob, since no layout reads it.
+//
+// The single-axis variants pin the cross axis to `hidden`: per spec a `visible`
+// cross axis next to a scrolling axis computes back to `auto`, which would
+// quietly scroll both ways — so we set it explicitly.
+//
+// The vertically-scrolling variants reserve a stable scrollbar gutter (--gutter,
+// default stable) so content does not shift when the scrollbar appears. It is
+// omitted from .lr-scroll-x, whose vertical axis is hidden and so can never
+// show a scrollbar to reserve space for. Unsupported browsers ignore it
+// gracefully.
+// =============================================================================
+
+@layer lrlayout.modifiers {
+  .lr-scroll {
+    overflow: auto;
+    scrollbar-gutter: var(--gutter, stable);
+  }
+
+  .lr-scroll-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .lr-scroll-y {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: var(--gutter, stable);
+  }
+}

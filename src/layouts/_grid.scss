@@ -1,0 +1,27 @@
+// =============================================================================
+// Grid
+// -----------------------------------------------------------------------------
+// A responsive grid that auto-fits as many columns as will hold a minimum
+// column width (--min), then reflows the count as the container resizes — again
+// without media queries. The min(--min, 100%) guard keeps a single column from
+// overflowing a container narrower than --min.
+//
+// Set --cols to a fixed number (e.g. 3) for a fixed-column grid, or to
+// auto-fill to keep empty tracks.
+//
+// Knobs: --min (minimum column width), --cols (track count / keyword),
+//        --gap, --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-grid {
+    box-sizing: border-box;
+    display: grid;
+    gap: var(--gap, var(--lr-space-md));
+    grid-template-columns: repeat(
+      var(--cols, auto-fit),
+      minmax(min(var(--min, 16rem), 100%), 1fr)
+    );
+    padding: var(--pad, 0);
+  }
+}

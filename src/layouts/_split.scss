@@ -1,0 +1,23 @@
+// =============================================================================
+// Split
+// -----------------------------------------------------------------------------
+// Pushes its children apart to opposite ends of the row (justify-content:
+// space-between). The common case is two zones — a logo on the left, nav on the
+// right — but it works for N children, distributing the space between them.
+// Wraps to stacked when the row gets too tight.
+//
+// Knobs: --gap, --justify (justify-content), --items (align-items), --wrap,
+//        --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-split {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: var(--wrap, wrap);
+    align-items: var(--items, center);
+    justify-content: var(--justify, space-between);
+    gap: var(--gap, var(--lr-space-md));
+    padding: var(--pad, 0);
+  }
+}

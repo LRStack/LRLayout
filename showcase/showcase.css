@@ -1,0 +1,382 @@
+/* =============================================================================
+   Showcase chrome
+   -----------------------------------------------------------------------------
+   Styles the demo pages themselves — NOT the library. The .lr-* classes come
+   from ../dist/lrlayout.css and nothing here redefines them. All variables are
+   --sc-* prefixed to stay clear of LRLayout's knobs (--gap, --pad, …).
+   ========================================================================== */
+
+:root {
+  --sc-bg: #f5f6f9;
+  --sc-surface: #ffffff;
+  --sc-ink: #1d2230;
+  --sc-muted: #5c6675;
+  --sc-line: #e3e6ec;
+  --sc-accent: #2563eb;
+  --sc-accent-ink: #1e40af;
+  --sc-soft: #eff6ff;
+  --sc-box: #dbeafe;
+  --sc-box-line: #bfdbfe;
+  --sc-box-ink: #1e3a8a;
+  --sc-warm: #ffe9d6;
+  --sc-warm-line: #f3c69b;
+  --sc-warm-ink: #7a3e12;
+  --sc-stage: #f0f2f6;
+  --sc-radius: 12px;
+  --sc-shadow: 0 1px 2px rgba(20, 24, 40, 0.06), 0 6px 18px rgba(20, 24, 40, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--sc-ink);
+  background: var(--sc-bg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--sc-accent);
+}
+
+code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  background: #eef0f4;
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+}
+
+/* --- Top bar (dogfoods .lr-split + .lr-cluster) --------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.7rem 1.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--sc-line);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-decoration: none;
+  color: var(--sc-ink);
+}
+.brand span {
+  color: var(--sc-accent);
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--sc-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+}
+.nav-link:hover {
+  color: var(--sc-ink);
+  background: var(--sc-soft);
+}
+.nav-link[aria-current="page"] {
+  color: var(--sc-accent);
+  background: var(--sc-soft);
+}
+
+/* --- Page shell ----------------------------------------------------------- */
+.page {
+  max-width: 64rem;
+  margin-inline: auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.page-header h1 {
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+  margin: 0 0 0.25rem;
+}
+.lead {
+  color: var(--sc-muted);
+  font-size: 1.05rem;
+  margin: 0;
+  max-width: 48rem;
+}
+
+/* --- Demo panel ----------------------------------------------------------- */
+.demo {
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius);
+  box-shadow: var(--sc-shadow);
+  overflow: hidden;
+}
+/* Panel header + stage are cosmetic only. Their padding and internal rhythm come
+   from lr-stack + lr-pad-* / lr-gap-* applied in the markup. */
+.demo h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.demo .note {
+  margin: 0;
+  color: var(--sc-muted);
+  font-size: 0.92rem;
+}
+.stage {
+  background: var(--sc-stage);
+  border-top: 1px solid var(--sc-line);
+}
+.stage + .stage {
+  border-top: 1px dashed var(--sc-box-line);
+}
+.stage__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sc-muted);
+}
+/* Drop default margins so lr-stack is the single source of spacing in demos. */
+.stage :is(h3, p) {
+  margin: 0;
+}
+.stage h3 {
+  font-size: 1.05rem;
+}
+
+/* --- Demo content blocks -------------------------------------------------- */
+/* Cosmetic only. Arrangement/centring is the library's job: in the markup these
+   are placed inside lr-* layouts, and a box that needs a centred label gets
+   `lr-cluster lr-justify-center`. */
+.box {
+  padding: 0.85rem 1rem;
+  background: var(--sc-box);
+  color: var(--sc-box-ink);
+  border: 1px solid var(--sc-box-line);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.box--alt {
+  background: var(--sc-warm);
+  color: var(--sc-warm-ink);
+  border-color: var(--sc-warm-line);
+}
+.box--tall {
+  min-height: 6rem;
+}
+
+.chip {
+  background: var(--sc-soft);
+  color: var(--sc-accent-ink);
+  border: 1px solid var(--sc-box-line);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn {
+  background: var(--sc-accent);
+  color: #fff;
+  border: 0;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--sc-accent);
+  border: 1px solid var(--sc-box-line);
+}
+
+/* Panels used to visualise flank regions */
+.panel {
+  background: var(--sc-soft);
+  border: 1px dashed var(--sc-box-line);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--sc-accent-ink);
+  font-weight: 600;
+}
+.panel--main {
+  background: #fff;
+  border-style: solid;
+  border-color: var(--sc-line);
+  color: var(--sc-ink);
+  font-weight: 500;
+  min-height: 9rem;
+}
+
+/* Cards (grid + frame demos, combined example) */
+.card {
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius);
+  overflow: hidden;
+  box-shadow: var(--sc-shadow);
+}
+.card img {
+  display: block;
+}
+.card__body {
+  padding: 0.85rem 1rem 1.1rem;
+}
+.card__title {
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+  font-size: 0.98rem;
+}
+.card__text {
+  color: var(--sc-muted);
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+/* Width wrapper for frame demos (the library has no width utility) + a dark
+   backdrop so object-fit: contain letterboxing is visible. Cosmetic only. */
+.media {
+  max-width: 32rem;
+  margin-inline: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.frame-dark {
+  background: #1d2230;
+}
+
+/* A fixed-height viewport for the sticky demo, so there's something to scroll.
+   The scroll behaviour itself comes from .lr-scroll-y in the markup. */
+.scrollbox {
+  block-size: 16rem;
+  background: #fff;
+  border: 1px solid var(--sc-line);
+  border-radius: 8px;
+}
+
+/* --- Callouts / hints ----------------------------------------------------- */
+/* Cosmetic only — laid out with lr-cluster in the markup. */
+.callout {
+  padding: 0.75rem 1rem;
+  background: var(--sc-soft);
+  border: 1px solid var(--sc-box-line);
+  border-radius: 8px;
+  color: var(--sc-accent-ink);
+  font-size: 0.9rem;
+}
+.callout::before {
+  content: "↔";
+  font-weight: 800;
+}
+
+/* --- Home: hero + primitive index ---------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 3rem 1.25rem 1rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 1.4rem + 3vw, 3.6rem);
+  margin: 0 0 0.5rem;
+}
+.hero p {
+  color: var(--sc-muted);
+  font-size: 1.15rem;
+  margin: 0 auto;
+  max-width: 40rem;
+}
+
+.tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--sc-surface);
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius);
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--sc-shadow);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--sc-box-line);
+}
+.tile h3 {
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+}
+.tile h3 code {
+  background: var(--sc-soft);
+  color: var(--sc-accent-ink);
+}
+.tile p {
+  margin: 0;
+  color: var(--sc-muted);
+  font-size: 0.9rem;
+}
+
+/* --- Combined example: full-page app ------------------------------------- */
+/* The shell fills the viewport so the example reads as a real app rather than a
+   demo. All internal layout is lr-* primitives; this is cosmetic only. */
+.app-shell {
+  min-block-size: 100dvh;
+}
+
+.app-sidebar {
+  background: #1d2230;
+  color: #c7ccd8;
+  border-radius: 10px;
+}
+.app-sidebar .brand {
+  color: #fff;
+}
+.app-link {
+  display: block;
+  text-decoration: none;
+  color: #c7ccd8;
+  padding: 0.45rem 0.6rem;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.app-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.app-link[aria-current="page"] {
+  background: var(--sc-accent);
+  color: #fff;
+}
+
+.app-title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sc-muted);
+  margin: 0;
+}
+
+footer.page-foot {
+  color: var(--sc-muted);
+  font-size: 0.88rem;
+  border-top: 1px solid var(--sc-line);
+  padding-top: 1rem;
+}

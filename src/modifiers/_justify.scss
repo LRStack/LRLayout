@@ -1,0 +1,25 @@
+// =============================================================================
+// Justify modifiers
+// -----------------------------------------------------------------------------
+// Set the --justify knob (justify-content — main-axis distribution) on cluster
+// and split, e.g. .lr-justify-between.
+// =============================================================================
+
+@use "sass:map";
+
+$justify: (
+  "start": flex-start,
+  "center": center,
+  "end": flex-end,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+
+@layer lrlayout.modifiers {
+  @each $name, $value in $justify {
+    .lr-justify-#{$name} {
+      --justify: #{$value};
+    }
+  }
+}

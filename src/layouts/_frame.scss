@@ -1,0 +1,32 @@
+// =============================================================================
+// Frame
+// -----------------------------------------------------------------------------
+// A media box with a fixed aspect ratio that crops overflow. Drop an image,
+// video, picture, or iframe inside and it fills the frame, cropped via
+// object-fit rather than distorted. Content that does not fill (e.g. an overlay
+// icon) is centred.
+//
+// Knobs: --ratio (aspect-ratio), --object (object-fit), --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-frame {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: var(--ratio, 16 / 9);
+    padding: var(--pad, 0);
+  }
+
+  .lr-frame > img,
+  .lr-frame > video,
+  .lr-frame > picture,
+  .lr-frame > picture img,
+  .lr-frame > iframe {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: var(--object, cover);
+  }
+}

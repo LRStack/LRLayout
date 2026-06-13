@@ -1,0 +1,20 @@
+// =============================================================================
+// Gap modifiers
+// -----------------------------------------------------------------------------
+// Set the --gap knob from the spacing scale, e.g. .lr-gap-lg. Generated from the
+// single-source $space map and pointed at the --lr-space-* custom properties, so
+// a consumer who retunes the scale (via a :root override) gets it here too.
+//
+//   <div class="lr-cluster lr-gap-lg"> … </div>   →  --gap: var(--lr-space-lg)
+// =============================================================================
+
+@use "sass:map";
+@use "../tokens";
+
+@layer lrlayout.modifiers {
+  @each $name in map.keys(tokens.$space) {
+    .lr-gap-#{$name} {
+      --gap: var(--lr-space-#{$name});
+    }
+  }
+}

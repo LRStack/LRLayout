@@ -1,0 +1,54 @@
+// =============================================================================
+// Flank
+// -----------------------------------------------------------------------------
+// A sidebar flanking a flexible main region. The sidebar takes an intrinsic
+// width (--side) while the main region fills the rest; once the main region can
+// no longer hold at least --content-min of the row, the two wrap to stacked.
+// No media queries — the switch is driven purely by available space.
+//
+// Source order is sidebar-first. Add .lr-flank-end to move the sidebar to the
+// other side without changing the markup order.
+//
+// Knobs: --side (sidebar width), --content-min (wrap threshold), --gap,
+//        --items (align-items), --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-flank {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--items, stretch);
+    gap: var(--gap, var(--lr-space-md));
+    padding: var(--pad, 0);
+  }
+
+  // Sidebar (first child): a preferred width that can shrink/grow to fill a row.
+  .lr-flank > :first-child {
+    flex-basis: var(--side, 16rem);
+    flex-grow: 1;
+  }
+
+  // Main region (last child): soaks up the remaining space, but refuses to drop
+  // below --content-min, forcing a wrap instead.
+  .lr-flank > :last-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--content-min, 50%);
+  }
+
+  // --- Sidebar on the trailing side -----------------------------------------
+  // Swap the roles: content becomes the first child, sidebar the last. Declared
+  // after the base rules so it wins on source order at equal specificity.
+  .lr-flank-end > :first-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--content-min, 50%);
+  }
+
+  .lr-flank-end > :last-child {
+    flex-basis: var(--side, 16rem);
+    flex-grow: 1;
+    min-inline-size: auto; // clear the base rule's content-min on the sidebar
+  }
+}

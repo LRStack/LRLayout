@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>frame · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html" aria-current="page">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-stack lr-gap-xl">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>frame</h1>
+        <p class="lead">
+          A media box with a fixed aspect ratio that crops overflow. Drop in an
+          image, video, picture, or iframe and it fills the frame — cropped via
+          <code>object-fit</code> rather than distorted.
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Default 16:9</h2>
+          <p class="note">
+            A plain <code>.lr-frame</code>. The source image is 4:3, so the top
+            and bottom are cropped to fill the wider frame.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="media">
+            <div class="lr-frame">
+              <img src="img/sample-1.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Any ratio</h2>
+          <p class="note">
+            Set <code>--ratio</code> to any aspect ratio. Same image, same
+            <code>object-fit: cover</code> — only the frame's shape changes.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--ratio: 1 / 1</span>
+          <div class="media">
+            <div class="lr-frame" style="--ratio: 1 / 1">
+              <img src="img/sample-2.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--ratio: 4 / 3</span>
+          <div class="media">
+            <div class="lr-frame" style="--ratio: 4 / 3">
+              <img src="img/sample-3.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--ratio: 21 / 9</span>
+          <div class="media">
+            <div class="lr-frame" style="--ratio: 21 / 9">
+              <img src="img/sample-4.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Cover vs contain</h2>
+          <p class="note">
+            <code>--object</code> switches the fit. <code>cover</code> (default)
+            crops to fill; <code>contain</code> fits the whole image inside,
+            letterboxing against the frame's background.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">object-fit: cover (default)</span>
+          <div class="media">
+            <div class="lr-frame">
+              <img src="img/sample-2.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--object: contain</span>
+          <div class="media">
+            <div class="lr-frame frame-dark" style="--object: contain">
+              <img src="img/sample-2.svg" alt="Abstract gradient artwork" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+// =============================================================================
+// LRLayout
+// -----------------------------------------------------------------------------
+// A collection of CSS layout classes. Responsiveness built in.
+//
+// Entry point — compiles to dist/lrlayout.css. Modules are loaded tokens →
+// layouts → modifiers for readability; the actual cascade precedence is fixed by
+// the @layer order statement at the top of _tokens.scss, so load order here is
+// not load-bearing.
+// =============================================================================
+
+@use "tokens";
+
+// Layout primitives
+@use "layouts/cluster";
+@use "layouts/stack";
+@use "layouts/split";
+@use "layouts/frame";
+@use "layouts/flank";
+@use "layouts/grid";
+
+// Modifier utilities
+@use "modifiers/gap";
+@use "modifiers/pad";
+@use "modifiers/items";
+@use "modifiers/justify";
+@use "modifiers/wrap";
+@use "modifiers/scroll";
+@use "modifiers/sticky";
