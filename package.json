@@ -1,0 +1,31 @@
+{
+  "name": "@lrstack/lrlayout",
+  "version": "0.1.0",
+  "description": "A collection of CSS layout classes. Responsiveness built in.",
+  "keywords": [
+    "css",
+    "scss",
+    "sass",
+    "layout",
+    "flexbox",
+    "grid",
+    "responsive",
+    "primitives"
+  ],
+  "license": "MIT",
+  "author": "LRStack",
+  "repository": "github:LRStack/LRLayout",
+  "homepage": "https://github.com/LRStack/LRLayout#readme",
+  "bugs": "https://github.com/LRStack/LRLayout/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": ["dist", "src"],
+  "sass": "./src/lrlayout.scss",
+  "style": "./dist/lrlayout.css",
+  "sideEffects": ["*.css", "*.scss"],
+  "scripts": {
+    "build": "sass src/lrlayout.scss dist/lrlayout.css --no-source-map --style=expanded",
+    "prepublishOnly": "npm run build"
+  }
+}

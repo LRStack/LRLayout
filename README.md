@@ -19,7 +19,7 @@ custom-property "knobs" that you set directly or via ready-made modifier classes
 LRLayout will be distributed on npm:
 
 ```bash
-npm install lrlayout
+npm install @lrstack/lrlayout
 ```
 
 > **Heads up:** the package isn't published yet. Until it is, build
@@ -34,12 +34,12 @@ npm install lrlayout
 Link the compiled stylesheet, or import it through your bundler:
 
 ```html
-<link rel="stylesheet" href="node_modules/lrlayout/dist/lrlayout.css" />
+<link rel="stylesheet" href="node_modules/@lrstack/lrlayout/dist/lrlayout.css" />
 ```
 
 ```js
 // …or from JavaScript, with a bundler
-import "lrlayout/dist/lrlayout.css";
+import "@lrstack/lrlayout/dist/lrlayout.css";
 ```
 
 ### In your SCSS
@@ -47,14 +47,14 @@ import "lrlayout/dist/lrlayout.css";
 Pull the library into your own Sass build with `@use`:
 
 ```scss
-@use "lrlayout";
+@use "@lrstack/lrlayout";
 ```
 
 - **Bundlers** (Vite, webpack + `sass-loader`, Parcel, …) resolve that from
   `node_modules` automatically.
 - **Dart Sass CLI** — use the package importer:
-  `@use "pkg:lrlayout";` (run `sass` with `--pkg-importer=node`); or add
-  `node_modules` to the load path and `@use "lrlayout/src/lrlayout";`.
+  `@use "pkg:@lrstack/lrlayout";` (run `sass` with `--pkg-importer=node`); or add
+  `node_modules` to the load path and `@use "@lrstack/lrlayout/src/lrlayout";`.
 
 LRLayout is configured entirely through **runtime CSS custom properties** — the
 knobs and the `--lr-space-*` scale — so there's nothing to pass at `@use` time.
