@@ -1,0 +1,42 @@
+// =============================================================================
+// Cover
+// -----------------------------------------------------------------------------
+// A region that fills at least --min of block space, with one vertically-
+// centered principal child and optional header/footer that fall to the top and
+// bottom edges. The classic full-viewport hero; the library's only block-axis
+// centering primitive.
+//
+// Mark the centered child with .lr-cover-center; a sole child is centered
+// automatically. The centered child takes margin-block: auto, which in a flex
+// column soaks up the free space above and below it, splitting it evenly to land
+// the child at the container's center regardless of header/footer height. The
+// header (first child) and footer (last child) then settle against the edges
+// with no special rules. --gap is the *minimum* space between regions; flex gap
+// applies before free-space distribution, so the auto-margins stack on top of
+// it and never collapse it.
+//
+// The centered child sits *between* the optional header and footer, so it can't
+// be selected positionally (unlike flank's sidebar) — hence the marker class,
+// the library's one child-targeting class. Mark at most one child.
+//
+// Knobs: --min (min block size), --gap, --items (align-items), --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-cover {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: var(--items, stretch);
+    min-block-size: var(--min, 100svh);
+    gap: var(--gap, var(--lr-space-md));
+    padding: var(--pad, 0);
+  }
+
+  // The principal child soaks up the free space above and below it, centering
+  // itself on the block axis. A lone child centers without the marker.
+  .lr-cover > .lr-cover-center,
+  .lr-cover > :only-child {
+    margin-block: auto;
+  }
+}

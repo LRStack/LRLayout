@@ -356,6 +356,49 @@ textarea.field {
   font-size: 0.9rem;
 }
 
+/* --- cover demo: hero + axis illustration -------------------------------- */
+/* Cosmetic only. The fill, vertical centring, and header/footer pinning are the
+   .lr-cover in the markup; these rules only give the splash visual weight and
+   make the bare cover region visible. No layout/width here. */
+.cover-hero {
+  background: radial-gradient(130% 130% at 0% 0%, #2563eb 0%, #1d2230 62%);
+  color: #fff;
+  border-radius: 10px;
+}
+.cover-hero .brand,
+.cover-hero .brand span {
+  color: #fff;
+}
+.cover-hero h2 {
+  font-size: clamp(1.6rem, 1rem + 3vw, 2.6rem);
+  margin: 0;
+}
+.cover-hero p {
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 34rem;
+}
+.cover-hero .chip {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.cover-hero__ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.cover-hero__hint {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+/* A bare cover with a visible boundary, for the stretch-vs-center comparison. */
+.cover-frame {
+  background: var(--sc-surface);
+  border: 1px dashed var(--sc-box-line);
+  border-radius: 10px;
+}
+
 /* --- Combined example: full-page app ------------------------------------- */
 /* The shell fills the viewport so the example reads as a real app rather than a
    demo. All internal layout is lr-* primitives; this is cosmetic only. */

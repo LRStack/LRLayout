@@ -13,9 +13,10 @@ Classic intrinsic-layout primitives with no current equivalent.
 
 - ~~**switcher**~~ — *shipped.* The "all-or-nothing" flip from a horizontal row
   to a fully stacked column at a threshold. See the `switcher` section in `README.md`.
-- **cover** *(high value)* — a region that fills its space (e.g.
-  `min-block-size`) with a vertically-centered principal child and optional
-  pinned header/footer. There is no vertical-centering primitive today.
+- ~~**cover**~~ — *shipped.* A region that fills at least `--min` of block space
+  with a vertically-centered principal child (`.lr-cover-center`) and optional
+  pinned header/footer. The library's block-axis centering primitive. See the
+  `cover` section in `README.md`.
 - **imposter / overlay** — an absolutely-positioned centered box over another
   (modal, badge, a play button on a `frame`). `frame` centers *media* but can't
   position an arbitrary overlay.

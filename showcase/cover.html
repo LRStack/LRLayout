@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>cover · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="switcher.html">switcher</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="center.html">center</a>
+        <a class="nav-link" href="cover.html" aria-current="page">cover</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-center lr-stack lr-gap-xl" style="--max: 64rem">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>cover</h1>
+        <p class="lead">
+          A region that fills at least <code>--min</code> of block space (default
+          <code>100svh</code>) with one vertically-centered principal child and
+          optional header/footer pinned to the top and bottom edges — the classic
+          full-viewport hero, or a dialog parked in the middle of the screen.
+          It's the library's only block-axis centering primitive; centering
+          <em>horizontally</em> is a separate axis you compose (with
+          <code>--items: center</code> or centered text).
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A landing hero</h2>
+          <p class="note">
+            The canonical use. The top bar (a <a href="split.html">split</a>) and
+            the scroll hint pin to the top and bottom edges; the
+            <code>.lr-cover-center</code> block — eyebrow, headline, subtext,
+            buttons — sits in the vertical middle whatever the cover's height. No
+            media queries. Its horizontal centring is composed: that block is a
+            <a href="stack.html">stack</a> with centered text, and its inline bits
+            (chip, buttons) ride <code>lr-cluster lr-justify-center</code>.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-cover cover-hero lr-pad-xl" style="--min: 27rem">
+            <header class="lr-split lr-items-center">
+              <span class="brand">LR<span>Layout</span></span>
+              <a class="btn btn--ghost cover-hero__ghost" href="#">Sign in</a>
+            </header>
+            <div
+              class="lr-cover-center lr-stack lr-gap-md"
+              style="text-align: center"
+            >
+              <div class="lr-cluster lr-justify-center">
+                <span class="chip">No media queries</span>
+              </div>
+              <h2>Layouts that respond to their container</h2>
+              <p>
+                Composable CSS primitives that handle spacing and responsiveness
+                intrinsically — drop them in and they adapt to the space they're
+                given.
+              </p>
+              <div class="lr-cluster lr-gap-sm lr-justify-center">
+                <a class="btn" href="#">Get started</a>
+                <a class="btn btn--ghost cover-hero__ghost" href="#">Read the docs</a>
+              </div>
+            </div>
+            <footer class="cover-hero__hint" style="text-align: center">
+              Scroll for more ↓
+            </footer>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A dialog centered in the screen</h2>
+          <p class="note">
+            One child, no marker needed — <code>:only-child</code> centers it
+            vertically. Add <code>--items: center</code> (here via
+            <code>lr-items-center</code>) and it also centers horizontally instead
+            of stretching full-width. The everyday "modal floating in an empty
+            region" pattern, with no positioning.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-cover lr-items-center" style="--min: 24rem">
+            <div class="card" style="inline-size: min(22rem, 100%)">
+              <div class="card__body lr-stack lr-gap-sm">
+                <h3 class="card__title">Welcome back</h3>
+                <p class="card__text">Sign in to pick up where you left off.</p>
+                <input class="field" type="email" placeholder="you@example.com" />
+                <button class="btn" type="button">Continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>One axis is yours to pick</h2>
+          <p class="note">
+            Same markup, same child — only <code>--items</code> differs.
+            <code>cover</code> always centers on the <strong>block</strong>
+            (vertical) axis; the <strong>inline</strong> (horizontal) axis is the
+            normal flex cross-axis. Left: the default <code>stretch</code> makes
+            the child full-width. Right: <code>--items: center</code> centers it
+            both ways.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-switcher lr-gap-lg" style="--threshold: 24rem">
+            <div class="lr-stack lr-gap-xs">
+              <span class="stage__label">--items: stretch &nbsp;(default)</span>
+              <div class="lr-cover cover-frame lr-pad-md" style="--min: 11rem">
+                <div class="box">centered child</div>
+              </div>
+            </div>
+            <div class="lr-stack lr-gap-xs">
+              <span class="stage__label">--items: center</span>
+              <div class="lr-cover cover-frame lr-pad-md lr-items-center" style="--min: 11rem">
+                <div class="box">centered child</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

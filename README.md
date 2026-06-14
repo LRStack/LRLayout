@@ -15,6 +15,7 @@ custom-property "knobs" that you set directly or via ready-made modifier classes
 - [`flank`](#flank) — a sidebar beside a flexible main region
 - [`grid`](#grid) — auto-fitting responsive columns
 - [`center`](#center) — a max-width content column, centered in its container
+- [`cover`](#cover) — a region that fills the viewport with a centered child
 
 ## Installation
 
@@ -232,6 +233,47 @@ layout inside it, or apply it to the same element as one.
 on viewports narrower than `--max`, while the column never grows past `--max`.
 
 Knobs: `--max` (60rem) · `--pad` (0)
+
+### cover
+
+A region that fills at least `--min` of block space (default `100svh`) with one
+vertically-centered principal child and optional header/footer pinned to the top
+and bottom edges. The library's only block-axis centering primitive — the classic
+full-viewport hero or a card centered in the screen. Mark the centered child with
+`.lr-cover-center`; a sole child centers on its own.
+
+```html
+<div class="lr-cover lr-pad-md">
+  <header>Brand</header>
+  <h1 class="lr-cover-center">Hero headline</h1>
+  <footer>Scroll ↓</footer>
+</div>
+```
+
+The centered child takes `margin-block: auto`, which in a flex column absorbs the
+free space above and below it — so it lands at the container's center whatever the
+header/footer height. `--gap` is the *minimum* space between regions; the
+auto-margins stack on top of it and never collapse it. `--min` is a *minimum*, so
+content taller than it grows the region rather than overflowing.
+
+`cover` only centers on the **block (vertical) axis** — horizontal alignment is
+the normal flex cross-axis, so by default (`--items: stretch`) the child spans the
+full width. For a hero, center the *content* (e.g. a `stack` child with
+`lr-items-center` and centered text); for a lone card centered both ways, set
+`--items: center`.
+
+Knobs: `--min` (100svh) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
+Child marker: `.lr-cover-center`
+
+`.lr-cover-center` is the one class in the library that targets a *child* rather
+than the container — the centered slot sits between header and footer, so it can't
+be picked positionally. Mark at most one child. Centering works by giving that
+child `margin-block: auto`, so a global margin reset (`* { margin: 0 }` or
+`h2 { margin: 0 }`) in your own *unlayered* CSS will override it and defeat the
+centering — put the marker on a wrapper element, or scope your reset with
+`:where()` so it doesn't outrank the library layer. Note also that `--min` is
+shared with [`grid`](#grid) (min column width there); they only collide if both
+classes land on the same element, which is a meaningless combination.
 
 ## Modifiers
 
