@@ -39,8 +39,9 @@ $space: (
 //
 // These @property rules sit OUTSIDE the cascade layers on purpose: registration
 // is global and unaffected by the cascade.
-$knobs: gap, gap-x, gap-y, pad, items, justify, wrap, ratio, object, side, side-start,
-  side-end, content-min, threshold, min, max, cols, sticky-top, gutter, inset;
+$knobs: gap, gap-x, gap-y, pad, items, justify, content, wrap, ratio, object, side,
+  side-start, side-end, content-min, threshold, min, max, cols, rows, sticky-top,
+  gutter, inset;
 
 @each $knob in $knobs {
   @property --#{$knob} {

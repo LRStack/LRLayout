@@ -113,6 +113,32 @@
         assertEq("2 columns", colCount(kids(g)), 2);
       });
 
+      test("grid: default alignment — stretch items/tracks, normal content, auto rows", () => {
+        const g = el(`<div class="lr-grid"><div>a</div></div>`);
+        assertEq("align-items stretch", style(g, "alignItems"), "stretch");
+        assertEq("justify-content stretch", style(g, "justifyContent"), "stretch");
+        assertEq("align-content normal", style(g, "alignContent"), "normal");
+        assertEq("grid-auto-rows auto", style(g, "gridAutoRows"), "auto");
+      });
+
+      test("grid: --items aligns each item within its row track", () => {
+        const g = el(`<div class="lr-grid lr-items-start"><div>a</div></div>`);
+        assertEq("align-items flex-end→start", style(g, "alignItems"), "flex-start");
+      });
+
+      test("grid: --rows sets the implicit row height", () => {
+        const g = el(`<div class="lr-grid" style="--rows:120px;width:800px">${"<div>x</div>".repeat(3)}</div>`);
+        assertNear("row track == 120px", kids(g)[0].offsetHeight, 120);
+      });
+
+      test("grid: .lr-cols-fit collapses empty tracks, .lr-cols-fill keeps them", () => {
+        // Two items in a wide container: auto-fit collapses the spare track so the
+        // items stretch wider; auto-fill keeps it, holding the items narrower.
+        const fit = el(`<div class="lr-grid lr-cols-fit" style="width:800px"><div>a</div><div>b</div></div>`);
+        const fill = el(`<div class="lr-grid lr-cols-fill" style="width:800px"><div>a</div><div>b</div></div>`);
+        assert("auto-fit items wider than auto-fill", rect(kids(fit)[0]).width > rect(kids(fill)[0]).width + 1);
+      });
+
       // ======================================================================
       // frame — fixed aspect-ratio media box
       // ======================================================================

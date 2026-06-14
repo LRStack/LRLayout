@@ -2,7 +2,8 @@
 // Items modifiers
 // -----------------------------------------------------------------------------
 // Set the --items knob (align-items — cross-axis alignment) on cluster, split,
-// and flank, e.g. .lr-items-center.
+// flank, and grid, e.g. .lr-items-center. On grid it aligns each item within its
+// row track (block axis).
 // =============================================================================
 
 @use "sass:map";

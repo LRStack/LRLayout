@@ -104,12 +104,112 @@
         <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
           <h2>Fixed column count</h2>
           <p class="note">
-            Set <code>--cols</code> to a number for a fixed-column grid that
-            still shares width evenly — here three columns regardless of width.
+            Set <code>--cols</code> to a number for a fixed-column grid that shares
+            width evenly — three columns regardless of width. Unlike auto-fit, a
+            fixed count can't drop columns, so below
+            <code>--cols × --min</code> the tracks would overflow; wrapping the
+            grid in <code>.lr-scroll-x</code> (or lowering <code>--min</code>)
+            lets it scroll instead of bleeding past the edge. Narrow the window to
+            see it scroll.
           </p>
         </div>
         <div class="stage lr-stack lr-gap-sm lr-pad-lg">
-          <div class="lr-grid" style="--cols: 3">
+          <div class="lr-scroll-x">
+            <div class="lr-grid" style="--cols: 3">
+              <div class="box">1</div>
+              <div class="box">2</div>
+              <div class="box">3</div>
+              <div class="box">4</div>
+              <div class="box">5</div>
+              <div class="box">6</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Aligning items in their tracks</h2>
+          <p class="note">
+            Items <strong>stretch</strong> to fill their cell by default, so every
+            tile in a row matches the tallest. <code>.lr-items-start</code> sets
+            <code>--items</code> (<code>align-items</code>) so each keeps its
+            natural height instead.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="stage__label">default — stretch</p>
+          <div class="lr-grid" style="--cols: 3; --min: 5rem">
+            <div class="box box--tall">tall</div>
+            <div class="box">short</div>
+            <div class="box">short</div>
+          </div>
+          <p class="stage__label">.lr-items-start</p>
+          <div class="lr-grid lr-items-start" style="--cols: 3; --min: 5rem">
+            <div class="box box--tall">tall</div>
+            <div class="box">short</div>
+            <div class="box">short</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>auto-fit vs auto-fill</h2>
+          <p class="note">
+            With only a couple of items in a wide container,
+            <code>.lr-cols-fit</code> (the default) collapses the empty tracks so
+            the items stretch to fill the row; <code>.lr-cols-fill</code> keeps
+            them, leaving equal trailing columns.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="stage__label">.lr-cols-fit (default)</p>
+          <div class="lr-grid lr-cols-fit" style="--min: 10rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+          </div>
+          <p class="stage__label">.lr-cols-fill</p>
+          <div class="lr-grid lr-cols-fill" style="--min: 10rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Distributing rows — align-content</h2>
+          <p class="note">
+            When a grid is taller than its rows need, <code>.lr-content-*</code>
+            sets <code>--content</code> (<code>align-content</code>) to distribute
+            the rows on the block axis. Here the grid is pinned to a fixed height.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="stage__label">.lr-content-between, height 18rem</p>
+          <div class="lr-grid lr-content-between" style="--cols: 3; --min: 5rem; height: 18rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Row height — <code>--rows</code></h2>
+          <p class="note">
+            <code>--rows</code> maps to <code>grid-auto-rows</code>. A
+            <code>minmax()</code> gives a minimum row height that still grows with
+            content — here every row is at least 7rem tall.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-grid" style="--cols: 3; --rows: minmax(7rem, auto); --min: 5rem">
             <div class="box">1</div>
             <div class="box">2</div>
             <div class="box">3</div>

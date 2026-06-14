@@ -233,7 +233,34 @@ the count as it resizes. Set `--cols` to a number for a fixed column count.
 </div>
 ```
 
-Knobs: `--min` (16rem) · `--cols` (auto-fit) · `--gap` (md, `--gap-x` / `--gap-y` override per axis) · `--pad` (0)
+Knobs: `--min` (16rem) · `--cols` (auto-fit; `.lr-cols-fit` / `.lr-cols-fill`) · `--gap` (md, `--gap-x` / `--gap-y` override per axis) · `--items` (stretch) · `--justify` (stretch) · `--content` (normal) · `--rows` (auto) · `--pad` (0)
+
+`grid` reads the alignment knobs too, mapped to grid's box-alignment longhands —
+so the same modifier classes you use on a flex primitive apply here, with the
+same visual meaning:
+
+- `--items` (`.lr-items-*`) aligns each item **within its row track** — e.g.
+  `.lr-items-start` lets cards keep their natural height instead of all stretching
+  to the tallest in the row.
+- `--justify` (`.lr-justify-*`) distributes the **tracks** along the inline axis.
+  With the default `1fr` tracks they already fill the row, so this is a no-op
+  until the tracks *don't* fill — i.e. with `auto-fill` or a fixed, non-`fr`
+  column width.
+- `--content` (`.lr-content-*`) distributes the **rows** along the block axis when
+  the grid is taller than its content (a fixed-height grid). Shared with wrapped
+  `cluster` / `split`.
+
+`.lr-cols-fit` / `.lr-cols-fill` set `--cols` to `auto-fit` / `auto-fill` without
+an inline custom property. With only a few items in a wide container, `auto-fit`
+(the default) collapses the empty tracks so the items stretch to fill the row;
+`auto-fill` keeps them, leaving equal trailing columns. `--rows` maps to
+`grid-auto-rows` for row-height control — `--rows: minmax(7rem, auto)` for a
+minimum row height, `1fr` for equal rows (given a container height).
+
+A **fixed** `--cols` count can't drop columns the way auto-fit does, so once the
+container falls below `--cols × --min` the tracks overflow horizontally. Wrap the
+grid in `.lr-scroll-x` to scroll instead of bleeding past the edge, or lower
+`--min` so the columns can shrink further before they do.
 
 ### center
 
@@ -370,6 +397,8 @@ Modifier classes set a knob, so they compose across every layout.
 | pad       | `.lr-pad-{0,xs,sm,md,lg,xl,2xl}`                         | `padding` (works on any element)               |
 | items     | `.lr-items-{start,center,end,stretch,baseline}`          | `--items` (`align-items`)                      |
 | justify   | `.lr-justify-{start,center,end,between,around,evenly}`   | `--justify` (`justify-content`)                |
+| content   | `.lr-content-{start,center,end,stretch,between,around,evenly}` | `--content` (`align-content`, multi-line) |
+| cols      | `.lr-cols-{fit,fill}`                                    | `--cols` (`auto-fit` / `auto-fill`)            |
 | wrap      | `.lr-wrap`, `.lr-nowrap`, `.lr-wrap-reverse`             | `--wrap` (`flex-wrap`)                         |
 | scroll    | `.lr-scroll`, `.lr-scroll-x`, `.lr-scroll-y`             | overflow (+ `scrollbar-gutter` on vertical)    |
 | sticky    | `.lr-sticky`                                             | `position: sticky; top: var(--sticky-top, 0)` |

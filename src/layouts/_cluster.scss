@@ -6,7 +6,8 @@
 // runs out.
 //
 // Knobs: --gap (--gap-x / --gap-y override per axis), --items (align-items),
-//        --justify (justify-content), --wrap, --pad.
+//        --justify (justify-content), --content (align-content, multi-line),
+//        --wrap, --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -17,6 +18,7 @@
     gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     align-items: var(--items, center);
     justify-content: var(--justify, flex-start);
+    align-content: var(--content, normal);
     padding: var(--pad, 0);
   }
 }

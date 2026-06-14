@@ -1,8 +1,9 @@
 // =============================================================================
 // Justify modifiers
 // -----------------------------------------------------------------------------
-// Set the --justify knob (justify-content — main-axis distribution) on cluster
-// and split, e.g. .lr-justify-between.
+// Set the --justify knob (justify-content — main-axis distribution) on cluster,
+// split, and grid, e.g. .lr-justify-between. On grid it distributes the tracks
+// along the inline axis (only visible when tracks don't fill the row).
 // =============================================================================
 
 @use "sass:map";

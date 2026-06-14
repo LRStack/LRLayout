@@ -1,0 +1,30 @@
+// =============================================================================
+// Content modifiers
+// -----------------------------------------------------------------------------
+// Set the --content knob (align-content — block-axis distribution of multiple
+// rows/lines, visible once a grid or wrapped cluster/split is taller than its
+// content). Composes across grid, cluster, and split, e.g. .lr-content-center.
+//
+// No `baseline` (invalid for align-content); start/end rather than
+// flex-start/flex-end to stay axis-neutral across grid and flex.
+// =============================================================================
+
+@use "sass:map";
+
+$content: (
+  "start": start,
+  "center": center,
+  "end": end,
+  "stretch": stretch,
+  "between": space-between,
+  "around": space-around,
+  "evenly": space-evenly,
+);
+
+@layer lrlayout.modifiers {
+  @each $name, $value in $content {
+    .lr-content-#{$name} {
+      --content: #{$value};
+    }
+  }
+}

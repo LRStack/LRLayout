@@ -35,10 +35,12 @@ Classic intrinsic-layout primitives with no current equivalent.
   (row gap) override `--gap` per axis, with `.lr-gap-x-*` / `.lr-gap-y-*`
   modifiers from the spacing scale. Available on every gap-bearing primitive;
   most useful on a wrapped `cluster` / `grid`. See the gap note in `README.md`.
-- **`grid` alignment** *(small, high impact)* — `grid` reads `--gap` / `--cols` /
-  `--min` but ignores `--items`, `--justify`, and `align-content`. Can't align
-  items within tracks; no modifier class for `auto-fill` (must use inline
-  `--cols: auto-fill`); no row-height control.
+- ~~**`grid` alignment**~~ — *shipped.* `grid` now reads `--items` (align-items,
+  item-in-track), `--justify` (justify-content, track distribution), and
+  `--content` (align-content) — the flex modifier classes apply unchanged.
+  `.lr-cols-fit` / `.lr-cols-fill` expose the `auto-fit` / `auto-fill` keywords,
+  and `--rows` maps to `grid-auto-rows` for row-height control. See the `grid`
+  section in `README.md`; design record in `docs/grid-alignment.md`.
 - **`stack` bottom-pin** — express the "fill height, push the last child to the
   bottom" pattern (auto-margin on the last child). Common inside cards.
 - **`frame` child list is closed** — currently `img` / `video` / `picture` /
@@ -46,8 +48,9 @@ Classic intrinsic-layout primitives with no current equivalent.
 
 ## Missing modifiers / knobs
 
-- **`align-content`** — nothing exposes multi-line cross-axis distribution, which
-  is exactly what matters once `cluster` / `grid` wrap to multiple lines.
+- ~~**`align-content`**~~ — *shipped.* `--content` + the `.lr-content-*` modifier
+  family set `align-content` (multi-line block-axis distribution) on `grid`,
+  `cluster`, and `split`. See the gap/alignment notes in `README.md`.
 - **Self-alignment** — no `align-self` override or auto-margin helper to push one
   item to the end of a `cluster` / `split`. A single item can't break from the
   group's alignment today.

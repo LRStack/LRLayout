@@ -1,0 +1,22 @@
+// =============================================================================
+// Cols modifiers
+// -----------------------------------------------------------------------------
+// Set the --cols knob to grid's auto-repeat keywords, so the choice between
+// collapsing and keeping empty tracks doesn't need an inline custom property:
+//
+//   .lr-cols-fit  → auto-fit  (default; empty tracks collapse, items stretch wider)
+//   .lr-cols-fill → auto-fill (empty tracks kept, leaving equal trailing columns)
+//
+// Fixed column counts stay inline (style="--cols: 3") — a rare one-off value, not
+// worth a generated class family.
+// =============================================================================
+
+@layer lrlayout.modifiers {
+  .lr-cols-fit {
+    --cols: auto-fit;
+  }
+
+  .lr-cols-fill {
+    --cols: auto-fill;
+  }
+}

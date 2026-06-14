@@ -73,6 +73,28 @@
       });
 
       // ======================================================================
+      // content — align-content knob (multi-line distribution), shared across
+      // grid / cluster / split
+      // ======================================================================
+      test("content: .lr-content-center → align-content center (grid)", () => {
+        assertEq("align-content", style(el(`<div class="lr-grid lr-content-center"><div>a</div></div>`), "alignContent"), "center");
+      });
+      test("content: .lr-content-between → align-content space-between (cluster)", () => {
+        assertEq("align-content", style(el(`<div class="lr-cluster lr-content-between"><span>a</span></div>`), "alignContent"), "space-between");
+      });
+
+      // ======================================================================
+      // cols — grid auto-repeat keyword knob
+      // ======================================================================
+      test("cols: .lr-cols-fill keeps empty tracks (a lone item stays narrow)", () => {
+        const w = "--min:8rem;width:600px";
+        const fit = el(`<div class="lr-grid" style="${w}"><div>a</div></div>`); // default auto-fit
+        const fill = el(`<div class="lr-grid lr-cols-fill" style="${w}"><div>a</div></div>`);
+        assertNear("auto-fit lone item fills the row", fit.firstElementChild.offsetWidth, 600);
+        assertNear("auto-fill lone item ~ one 8rem-ish track", fill.firstElementChild.offsetWidth, rem(8), 24);
+      });
+
+      // ======================================================================
       // wrap — flex-wrap knob
       // ======================================================================
       test("wrap: .lr-nowrap → flex-wrap nowrap", () => {

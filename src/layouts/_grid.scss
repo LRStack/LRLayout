@@ -9,8 +9,15 @@
 // Set --cols to a fixed number (e.g. 3) for a fixed-column grid, or to
 // auto-fill to keep empty tracks.
 //
+// --items aligns each item within its row track (block axis); --justify
+// distributes the tracks (inline axis) — only visible when tracks don't fill the
+// row, i.e. auto-fill or non-fr --cols. --content distributes rows when the grid
+// is taller than its content. --rows sets grid-auto-rows (min / equal row height).
+//
 // Knobs: --min (minimum column width), --cols (track count / keyword),
-//        --gap (--gap-x / --gap-y override per axis), --pad.
+//        --gap (--gap-x / --gap-y override per axis), --items (align-items),
+//        --justify (justify-content), --content (align-content),
+//        --rows (grid-auto-rows), --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -22,6 +29,10 @@
       var(--cols, auto-fit),
       minmax(min(var(--min, 16rem), 100%), 1fr)
     );
+    grid-auto-rows: var(--rows, auto);
+    align-items: var(--items, stretch);
+    justify-content: var(--justify, stretch);
+    align-content: var(--content, normal);
     padding: var(--pad, 0);
   }
 }
