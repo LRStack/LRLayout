@@ -89,6 +89,10 @@ fallbacks. Drive a knob two ways; both land on the same `var()`:
 <div class="lr-cluster" style="--gap: 2rem"> … </div>
 ```
 
+`--gap` sets both axes; `--gap-x` (column gap) and `--gap-y` (row gap) override it
+per axis. Handy when a wrapped `cluster` or `grid` wants a tighter vertical rhythm
+than its horizontal one — `class="lr-cluster lr-gap-x-lg lr-gap-y-sm"`.
+
 Knobs are registered with `@property … { inherits: false }`, so a value set on one
 layout never leaks into a nested one. (The single deliberate exception is flank's
 `--flank-basis`, which inherits on purpose — see [flank](#flank).)
@@ -106,7 +110,7 @@ nav. The go-to primitive for most rows.
 </div>
 ```
 
-Knobs: `--gap` (md) · `--justify` (flex-start) · `--items` (center) · `--wrap` (wrap) · `--pad` (0)
+Knobs: `--gap` (md, `--gap-x` / `--gap-y` override per axis) · `--justify` (flex-start) · `--items` (center) · `--wrap` (wrap) · `--pad` (0)
 
 ### switcher
 
@@ -229,7 +233,7 @@ the count as it resizes. Set `--cols` to a number for a fixed column count.
 </div>
 ```
 
-Knobs: `--min` (16rem) · `--cols` (auto-fit) · `--gap` (md) · `--pad` (0)
+Knobs: `--min` (16rem) · `--cols` (auto-fit) · `--gap` (md, `--gap-x` / `--gap-y` override per axis) · `--pad` (0)
 
 ### center
 
@@ -362,6 +366,7 @@ Modifier classes set a knob, so they compose across every layout.
 | Family    | Classes                                                  | Sets                                          |
 | --------- | -------------------------------------------------------- | --------------------------------------------- |
 | gap       | `.lr-gap-{0,xs,sm,md,lg,xl,2xl}`                         | `--gap`                                        |
+| gap-x/y   | `.lr-gap-x-{…}` / `.lr-gap-y-{…}`                        | `--gap-x` / `--gap-y` (per-axis, override `--gap`) |
 | pad       | `.lr-pad-{0,xs,sm,md,lg,xl,2xl}`                         | `padding` (works on any element)               |
 | items     | `.lr-items-{start,center,end,stretch,baseline}`          | `--items` (`align-items`)                      |
 | justify   | `.lr-justify-{start,center,end,between,around,evenly}`   | `--justify` (`justify-content`)                |

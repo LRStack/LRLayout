@@ -6,8 +6,8 @@
 // right — but it works for N children, distributing the space between them.
 // Wraps to stacked when the row gets too tight.
 //
-// Knobs: --gap, --justify (justify-content), --items (align-items), --wrap,
-//        --pad.
+// Knobs: --gap (--gap-x / --gap-y override per axis), --justify
+//        (justify-content), --items (align-items), --wrap, --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -17,7 +17,7 @@
     flex-wrap: var(--wrap, wrap);
     align-items: var(--items, center);
     justify-content: var(--justify, space-between);
-    gap: var(--gap, var(--lr-space-md));
+    gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     padding: var(--pad, 0);
   }
 }

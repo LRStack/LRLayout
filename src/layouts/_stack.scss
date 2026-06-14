@@ -5,7 +5,7 @@
 // *between* items only, so the first/last child sit flush against the stack's
 // own padding edges.
 //
-// Knobs: --gap, --pad.
+// Knobs: --gap (--gap-x / --gap-y override per axis), --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -13,7 +13,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: var(--gap, var(--lr-space-md));
+    gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     padding: var(--pad, 0);
   }
 }

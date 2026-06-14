@@ -19,7 +19,8 @@
 // be selected positionally (unlike flank's sidebar) — hence the marker class,
 // the library's one child-targeting class. Mark at most one child.
 //
-// Knobs: --min (min block size), --gap, --items (align-items), --pad.
+// Knobs: --min (min block size), --gap (--gap-x / --gap-y override per axis),
+//        --items (align-items), --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -29,7 +30,7 @@
     flex-direction: column;
     align-items: var(--items, stretch);
     min-block-size: var(--min, 100svh);
-    gap: var(--gap, var(--lr-space-md));
+    gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     padding: var(--pad, 0);
   }
 

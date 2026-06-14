@@ -21,8 +21,8 @@
 //        --flank-basis (sidebar width that *inherits* — set it once on an
 //        ancestor, e.g. a <form>, and every nested flank picks up the same
 //        width; handy for aligning a column of form labels. --side still wins
-//        when both are set), --content-min (wrap threshold), --gap, --items
-//        (align-items), --pad.
+//        when both are set), --content-min (wrap threshold), --gap (--gap-x /
+//        --gap-y override per axis), --items (align-items), --pad.
 //
 // Why the --lr-* indirection below: --side / --side-start / --side-end /
 // --content-min are read on the flex *children*, but the public knobs are
@@ -43,7 +43,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: var(--items, stretch);
-    gap: var(--gap, var(--lr-space-md));
+    gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     padding: var(--pad, 0);
 
     // Child-read knobs, resolved here and handed down as inheriting vars.

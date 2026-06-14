@@ -6,6 +6,12 @@
 // a consumer who retunes the scale (via a :root override) gets it here too.
 //
 //   <div class="lr-cluster lr-gap-lg"> … </div>   →  --gap: var(--lr-space-lg)
+//
+// .lr-gap-x-* / .lr-gap-y-* set the per-axis knobs (--gap-x = column gap,
+// --gap-y = row gap), which override --gap on that axis only. Combine for a
+// wrapped cluster/grid with a tighter vertical rhythm than its horizontal one:
+//
+//   <div class="lr-cluster lr-gap-x-lg lr-gap-y-sm"> … </div>
 // =============================================================================
 
 @use "sass:map";
@@ -15,6 +21,14 @@
   @each $name in map.keys(tokens.$space) {
     .lr-gap-#{$name} {
       --gap: var(--lr-space-#{$name});
+    }
+
+    .lr-gap-x-#{$name} {
+      --gap-x: var(--lr-space-#{$name});
+    }
+
+    .lr-gap-y-#{$name} {
+      --gap-y: var(--lr-space-#{$name});
     }
   }
 }

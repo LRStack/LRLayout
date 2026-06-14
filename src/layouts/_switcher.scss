@@ -18,7 +18,8 @@
 // you have enough items that a row would pack them too narrow, reach for `grid`
 // (auto-fit) instead — that's the signal you've outgrown this primitive.
 //
-// Knobs: --threshold (switch width), --gap, --items (align-items), --pad.
+// Knobs: --threshold (switch width), --gap (--gap-x / --gap-y override per
+//        axis), --items (align-items), --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -27,7 +28,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: var(--items, stretch);
-    gap: var(--gap, var(--lr-space-md));
+    gap: var(--gap-y, var(--gap, var(--lr-space-md))) var(--gap-x, var(--gap, var(--lr-space-md)));
     padding: var(--pad, 0);
   }
 

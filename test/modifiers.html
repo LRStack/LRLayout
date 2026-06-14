@@ -31,6 +31,18 @@
         assertNear("columnGap", px(g, "columnGap"), rem(3));
       });
 
+      test("gap: .lr-gap-x-* / .lr-gap-y-* set each axis independently", () => {
+        const g = el(`<div class="lr-grid lr-gap-x-lg lr-gap-y-sm"><div>a</div></div>`);
+        assertNear("columnGap", px(g, "columnGap"), rem(1.5));
+        assertNear("rowGap", px(g, "rowGap"), rem(0.5));
+      });
+
+      test("gap: --gap-y overrides --gap on its axis only", () => {
+        const g = el(`<div class="lr-grid lr-gap-md lr-gap-y-xs"><div>a</div></div>`);
+        assertNear("columnGap falls back to --gap", px(g, "columnGap"), rem(1));
+        assertNear("rowGap from --gap-y", px(g, "rowGap"), rem(0.25));
+      });
+
       // ======================================================================
       // pad — sets padding directly, works standalone (no primitive)
       // ======================================================================

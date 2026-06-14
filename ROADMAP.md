@@ -31,9 +31,10 @@ Classic intrinsic-layout primitives with no current equivalent.
 
 ## Gaps inside existing primitives
 
-- **Separate row/column gap** *(small, high impact)* — add `--gap-x` / `--gap-y`
-  alongside `--gap`. Bites most on `cluster` (wrapped rows often want a tighter
-  vertical gap) and `grid`.
+- ~~**Separate row/column gap**~~ — *shipped.* `--gap-x` (column gap) / `--gap-y`
+  (row gap) override `--gap` per axis, with `.lr-gap-x-*` / `.lr-gap-y-*`
+  modifiers from the spacing scale. Available on every gap-bearing primitive;
+  most useful on a wrapped `cluster` / `grid`. See the gap note in `README.md`.
 - **`grid` alignment** *(small, high impact)* — `grid` reads `--gap` / `--cols` /
   `--min` but ignores `--items`, `--justify`, and `align-content`. Can't align
   items within tracks; no modifier class for `auto-fill` (must use inline
