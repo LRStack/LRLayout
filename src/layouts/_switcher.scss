@@ -1,0 +1,39 @@
+// =============================================================================
+// Switcher
+// -----------------------------------------------------------------------------
+// A small set of equal-width items that share a single row, then flip — all
+// together, all at once — to a full-width stacked column when the container
+// drops below --threshold. No media queries: the switch is driven by the
+// container's own inline size via a flexbox "quantity query".
+//
+// Each child's flex-basis is calc((--threshold - 100%) * 999). When the
+// container is wider than --threshold the expression goes large-negative and
+// clamps to 0, so the children collapse to a zero basis and flex-grow spreads
+// them into equal columns. When it is narrower the expression is large-positive,
+// exceeds the container, and flex-wrap forces every child onto its own line — a
+// full column. The same expression governs every child, so they cross the
+// threshold together.
+//
+// Deliberately has NO count limit: switcher is for a *small number of peers*. If
+// you have enough items that a row would pack them too narrow, reach for `grid`
+// (auto-fit) instead — that's the signal you've outgrown this primitive.
+//
+// Knobs: --threshold (switch width), --gap, --items (align-items), --pad.
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-switcher {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--items, stretch);
+    gap: var(--gap, var(--lr-space-md));
+    padding: var(--pad, 0);
+  }
+
+  // Equal columns above the threshold; full-width stack below it.
+  .lr-switcher > * {
+    flex-grow: 1;
+    flex-basis: calc((var(--threshold, 30rem) - 100%) * 999);
+  }
+}

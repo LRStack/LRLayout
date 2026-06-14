@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>switcher · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="switcher.html" aria-current="page">switcher</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="center.html">center</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-center lr-stack lr-gap-xl" style="--max: 64rem">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>switcher</h1>
+        <p class="lead">
+          A small set of equal-width items that share one row, then flip — all
+          together, all at once — to a full-width stacked column when the
+          container drops below <code>--threshold</code>. No media queries: the
+          switch rides a flexbox <em>quantity query</em>
+          (<code>flex-basis: calc()</code>).
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Three peers, all-or-nothing</h2>
+          <p class="note">
+            A plain <code>.lr-switcher</code>. Wide enough, the three panels
+            share the row as equal columns; narrow the window past
+            <code>--threshold</code> and they switch <em>together</em> to a full
+            column — never a half-wrapped in-between. Compare with
+            <a href="cluster.html">cluster</a>, which wraps one item at a time.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-switcher">
+            <div class="box box--tall">One</div>
+            <div class="box box--tall">Two</div>
+            <div class="box box--tall">Three</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Tune the switch point</h2>
+          <p class="note">
+            Identical markup — only <code>--threshold</code> changes. A higher
+            threshold flips to a column sooner (at a wider container). It's an
+            <em>approximate</em> switch width: the gap isn't subtracted from the
+            math, so the real flip lands a touch wider than the value set.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--threshold: 20rem</span>
+          <div class="lr-switcher" style="--threshold: 20rem">
+            <div class="box">A</div>
+            <div class="box">B</div>
+            <div class="box">C</div>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--threshold: 30rem &nbsp;(default)</span>
+          <div class="lr-switcher">
+            <div class="box">A</div>
+            <div class="box">B</div>
+            <div class="box">C</div>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--threshold: 48rem</span>
+          <div class="lr-switcher" style="--threshold: 48rem">
+            <div class="box">A</div>
+            <div class="box">B</div>
+            <div class="box">C</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Two side-by-side panels</h2>
+          <p class="note">
+            The other common case — a pair of equal panels that stack on narrow
+            screens. Each panel is itself an <code>.lr-stack</code>;
+            <code>--items: stretch</code> (the default) keeps them equal height
+            while side by side.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-switcher lr-gap-lg">
+            <div class="card lr-stack lr-gap-xs lr-pad-lg">
+              <h3 class="card__title">Before</h3>
+              <p class="card__text">
+                Two zones competing for one row. Plenty of room, so they sit
+                side by side as equal columns.
+              </p>
+            </div>
+            <div class="card lr-stack lr-gap-xs lr-pad-lg">
+              <h3 class="card__title">After</h3>
+              <p class="card__text">
+                Squeeze the container and both drop to full width at the same
+                instant — no lopsided wrap.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>When to reach for grid instead</h2>
+          <p class="note">
+            <code>switcher</code> is for a <em>small</em> number of peers and has
+            no count limit by design. For an arbitrary-length list of cards, use
+            <a href="grid.html">grid</a> with <code>--min</code> — it reflows the
+            column <em>count</em> a row at a time, instead of forcing every item
+            full-width together.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-grid" style="--min: 9rem">
+            <div class="box">1</div>
+            <div class="box">2</div>
+            <div class="box">3</div>
+            <div class="box">4</div>
+            <div class="box">5</div>
+            <div class="box">6</div>
+            <div class="box">7</div>
+            <div class="box">8</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

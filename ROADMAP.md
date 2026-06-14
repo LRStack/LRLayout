@@ -11,10 +11,8 @@ Rough priority lean is noted per section, not a committed order.
 
 Classic intrinsic-layout primitives with no current equivalent.
 
-- **switcher** *(high value)* — the "all-or-nothing" flip from a horizontal row
-  to a fully stacked column at a threshold (the `flex-basis: calc()`
-  quantity-query trick). Distinct from `cluster` (wraps item-by-item) and
-  `flank` (keeps a sidebar); neither does "everything goes vertical at once."
+- ~~**switcher**~~ — *shipped.* The "all-or-nothing" flip from a horizontal row
+  to a fully stacked column at a threshold. See the `switcher` section in `README.md`.
 - **cover** *(high value)* — a region that fills its space (e.g.
   `min-block-size`) with a vertically-centered principal child and optional
   pinned header/footer. There is no vertical-centering primitive today.

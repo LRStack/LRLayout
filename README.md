@@ -8,6 +8,7 @@ queries**. Every class is tuned per-instance through a handful of CSS
 custom-property "knobs" that you set directly or via ready-made modifier classes.
 
 - [`cluster`](#cluster) — even-gapped items that wrap; the go-to for most rows
+- [`switcher`](#switcher) — a few equal items that flip to a column all at once
 - [`stack`](#stack) — vertical rhythm between children
 - [`split`](#split) — push zones to opposite ends
 - [`frame`](#frame) — fixed-ratio media, cropped to fit
@@ -104,6 +105,27 @@ nav. The go-to primitive for most rows.
 ```
 
 Knobs: `--gap` (md) · `--justify` (flex-start) · `--items` (center) · `--wrap` (wrap) · `--pad` (0)
+
+### switcher
+
+A small set of equal-width items that share one row, then flip — all together,
+all at once — to a full-width stacked column when the container drops below
+`--threshold`. No media queries: the switch rides a flexbox quantity query. Use
+it for a *small* number of peers (two panels, a three-up card row); where
+`cluster` wraps one item at a time, `switcher` is all-or-nothing.
+
+```html
+<div class="lr-switcher" style="--threshold: 30rem">
+  <div>One</div><div>Two</div><div>Three</div>
+</div>
+```
+
+Knobs: `--threshold` (30rem) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
+
+`--threshold` is an *approximate* switch width: the gap isn't subtracted from the
+internal math, so the real flip lands a touch wider than the value you set.
+There's deliberately no count limit — for an arbitrary-length list of cards reach
+for [`grid`](#grid) instead, which reflows the column count a row at a time.
 
 ### stack
 
