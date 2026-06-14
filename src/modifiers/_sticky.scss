@@ -1,11 +1,17 @@
 // =============================================================================
-// Sticky modifier
+// Sticky modifiers
 // -----------------------------------------------------------------------------
-// Pin an element as it scrolls. --sticky-top sets the offset (default 0).
+// Pin an element as it scrolls. `.lr-sticky` pins to the top (--sticky-top sets
+// the offset, default 0); `.lr-sticky-bottom` pins to the bottom for footer
+// bars (--sticky-bottom, default 0).
 //
-// `align-self: start` is included so a sticky element inside a flex layout (e.g.
-// a flank sidebar) is not stretched to the container's full height — a
-// full-height item has nothing to stick within and would never pin.
+// The `align-self` is included so a sticky element inside a flex layout (e.g. a
+// flank sidebar) is not stretched to the container's full height — a full-height
+// item has nothing to stick within and would never pin. It also seats the item
+// against the edge it pins to: `start` for top, `end` for bottom.
+//
+// `top`/`bottom` are physical (not logical) on purpose: they pin in the scroll
+// (block) direction, which these inset properties already address directly.
 // =============================================================================
 
 @layer lrlayout.modifiers {
@@ -13,5 +19,11 @@
     position: sticky;
     top: var(--sticky-top, 0);
     align-self: start;
+  }
+
+  .lr-sticky-bottom {
+    position: sticky;
+    bottom: var(--sticky-bottom, 0);
+    align-self: end;
   }
 }

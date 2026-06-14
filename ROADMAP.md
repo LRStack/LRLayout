@@ -57,8 +57,9 @@ Classic intrinsic-layout primitives with no current equivalent.
   shoving one item to an edge). See the modifiers table in `README.md`; design
   record in `docs/self-alignment.md`. (Block-axis bottom-pin stays the separate
   **`stack` bottom-pin** item below — push is inline-axis only.)
-- **Bottom sticky** — sticky is top-only (`--sticky-top` / `top` hardcoded). No
-  bottom-pinning variant for footer bars.
+- ~~**Bottom sticky**~~ — *shipped.* `.lr-sticky-bottom` pins to the bottom for
+  footer bars (`bottom: var(--sticky-bottom, 0)`, `align-self: end`), mirroring
+  `.lr-sticky`. See the modifiers table / sticky note in `README.md`.
 - **`order`** — no helper for source-order-independent reordering (only flank's
   end-swap exists).
 
@@ -82,4 +83,5 @@ Classic intrinsic-layout primitives with no current equivalent.
 
 - **RTL / writing-mode** — already handled well via `margin-inline` /
   `inline-size` and flex row-direction; most of it works logically out of the
-  box. (Sticky's physical `top` is the one holdout — see Bottom sticky above.)
+  box. (Sticky's physical `top`/`bottom` are the one holdout — they pin in the
+  scroll/block direction, which those insets address directly.)

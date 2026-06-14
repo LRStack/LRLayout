@@ -167,6 +167,15 @@
       test("sticky: --sticky-top sets the offset", () => {
         assertEq("top", style(el(`<div class="lr-sticky" style="--sticky-top:1rem">x</div>`), "top"), "16px");
       });
+      test("sticky: .lr-sticky-bottom → position sticky, bottom 0, align-self end", () => {
+        const s = el(`<div class="lr-sticky-bottom">x</div>`);
+        assertEq("position", style(s, "position"), "sticky");
+        assertEq("bottom", style(s, "bottom"), "0px");
+        assertEq("align-self", style(s, "alignSelf"), "end");
+      });
+      test("sticky: --sticky-bottom sets the offset", () => {
+        assertEq("bottom", style(el(`<div class="lr-sticky-bottom" style="--sticky-bottom:1rem">x</div>`), "bottom"), "16px");
+      });
 
       // ======================================================================
       // Cascade contracts

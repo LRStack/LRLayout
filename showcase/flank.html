@@ -150,6 +150,40 @@
 
       <section class="demo">
         <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Sticky footer bar</h2>
+          <p class="note">
+            <code>.lr-sticky-bottom</code> mirrors <code>.lr-sticky</code> on the
+            block axis: it pins to the <em>bottom</em> while content scrolls past —
+            scroll inside the panel below. Use it for action bars and toolbars.
+            <code>--sticky-bottom</code> sets the offset; the modifier's
+            <code>align-self: end</code> seats it against the bottom edge.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="scrollbox lr-scroll-y">
+            <div class="lr-stack lr-gap-sm lr-pad-sm">
+              <div class="box">Row 1</div>
+              <div class="box">Row 2</div>
+              <div class="box">Row 3</div>
+              <div class="box">Row 4</div>
+              <div class="box">Row 5</div>
+              <div class="box">Row 6</div>
+              <div class="box">Row 7</div>
+              <div class="box">Row 8</div>
+              <div
+                class="toolbar lr-sticky-bottom lr-cluster lr-justify-end lr-gap-sm"
+                style="--sticky-bottom: 0.75rem"
+              >
+                <button class="btn btn--ghost">Cancel</button>
+                <button class="btn">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
           <h2>Form rows: aligned labels</h2>
           <p class="note">
             Each row is a <code>&lt;label&gt;</code> that is itself a

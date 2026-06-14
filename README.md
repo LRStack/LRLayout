@@ -403,7 +403,7 @@ Modifier classes set a knob, so they compose across every layout.
 | cols      | `.lr-cols-{fit,fill}`                                    | `--cols` (`auto-fit` / `auto-fill`)            |
 | wrap      | `.lr-wrap`, `.lr-nowrap`, `.lr-wrap-reverse`             | `--wrap` (`flex-wrap`)                         |
 | scroll    | `.lr-scroll`, `.lr-scroll-x`, `.lr-scroll-y`             | overflow (+ `scrollbar-gutter` on vertical)    |
-| sticky    | `.lr-sticky`                                             | `position: sticky; top: var(--sticky-top, 0)` |
+| sticky    | `.lr-sticky`, `.lr-sticky-bottom`                        | `position: sticky` + `top: var(--sticky-top, 0)` / `bottom: var(--sticky-bottom, 0)` |
 
 The gap/pad spacing scale (`--lr-space-*`):
 
@@ -423,9 +423,12 @@ The gap/pad spacing scale (`--lr-space-*`):
 - **scroll** — the vertical variants reserve a stable scrollbar gutter
   (`scrollbar-gutter: var(--gutter, stable)`) to avoid layout shift; tune with
   `--gutter` (`auto`, `stable both-edges`).
-- **sticky** — `--sticky-top` sets the offset (default `0`). Includes
-  `align-self: start` so a sticky flex item (e.g. a flank sidebar) isn't stretched
-  to full height, which would stop it pinning.
+- **sticky** — `.lr-sticky` pins to the top (`--sticky-top`, default `0`);
+  `.lr-sticky-bottom` pins to the bottom for footer bars (`--sticky-bottom`,
+  default `0`). Each includes `align-self` (`start` / `end`) so a sticky flex item
+  (e.g. a flank sidebar) isn't stretched to full height — which would stop it
+  pinning — and seats it against the edge it pins to. The `top`/`bottom` insets
+  are physical: they address the scroll (block) direction directly.
 
 ## Customizing
 
