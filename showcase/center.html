@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>center · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="center.html" aria-current="page">center</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-center lr-stack lr-gap-xl" style="--max: 64rem">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>center</h1>
+        <p class="lead">
+          A horizontally-centered content column. Caps its width at
+          <code>--max</code> and centers itself with auto inline margins — the
+          page/content wrapper most layouts sit inside. It has no flexbox of its
+          own, so it composes with anything. (This very page is an
+          <code>.lr-center</code>.)
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A capped, centered column</h2>
+          <p class="note">
+            A plain <code>.lr-center</code> caps its child at <code>--max</code>
+            and sits it in the middle of whatever space it's given — here a
+            narrow 24rem column inside a much wider panel.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div class="lr-center" style="--max: 24rem">
+            <div class="box">Capped at 24rem · centered in its container</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Set the measure</h2>
+          <p class="note">
+            Identical paragraph — only <code>--max</code> changes. A tighter
+            measure wraps the text sooner; wider lets it breathe. The column
+            stays centered in each case.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--max: 20rem</span>
+          <div class="lr-center" style="--max: 20rem">
+            <p>The principle of measure: a line of text that's too long forces the eye to travel far to find the next line.</p>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--max: 36rem</span>
+          <div class="lr-center" style="--max: 36rem">
+            <p>The principle of measure: a line of text that's too long forces the eye to travel far to find the next line.</p>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label">--max: 52rem</span>
+          <div class="lr-center" style="--max: 52rem">
+            <p>The principle of measure: a line of text that's too long forces the eye to travel far to find the next line.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A readable article column</h2>
+          <p class="note">
+            The everyday use: hold prose to a comfortable measure. Here
+            <code>.lr-center</code> and <code>.lr-stack</code> share one element
+            — the column caps the line length while the stack spaces the content.
+            <code>--pad</code> keeps the text off the edges when the screen is
+            narrower than <code>--max</code>.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <article class="lr-center lr-stack lr-gap-md" style="--max: 34rem">
+            <h3>Designing with constraints</h3>
+            <p>
+              A column that never grows past a comfortable measure keeps long
+              lines from sprawling across wide screens, where the eye loses its
+              place jumping back to the start of each line.
+            </p>
+            <p>
+              Because <code>center</code> is just a block, it nests inside any
+              layout and wraps any layout — the same primitive frames a whole
+              page or a single paragraph.
+            </p>
+            <div class="lr-cluster lr-gap-sm">
+              <button class="btn">Read more</button>
+              <button class="btn btn--ghost">Share</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

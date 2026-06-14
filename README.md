@@ -13,19 +13,15 @@ custom-property "knobs" that you set directly or via ready-made modifier classes
 - [`frame`](#frame) — fixed-ratio media, cropped to fit
 - [`flank`](#flank) — a sidebar beside a flexible main region
 - [`grid`](#grid) — auto-fitting responsive columns
+- [`center`](#center) — a max-width content column, centered in its container
 
 ## Installation
 
-LRLayout will be distributed on npm:
+LRLayout is distributed on npm:
 
 ```bash
 npm install @lrstack/lrlayout
 ```
-
-> **Heads up:** the package isn't published yet. Until it is, build
-> `dist/lrlayout.css` locally (see [Development](#development)) or vendor the
-> `src/` SCSS into your project. The usage below is written for the published
-> package.
 
 ## Usage
 
@@ -194,6 +190,27 @@ the count as it resizes. Set `--cols` to a number for a fixed column count.
 
 Knobs: `--min` (16rem) · `--cols` (auto-fit) · `--gap` (md) · `--pad` (0)
 
+### center
+
+A content column capped at `--max` and centered in its container with auto inline
+margins — the page/content wrapper most layouts sit inside, and usually the first
+primitive you reach for. It stays a plain block, so it composes both ways: nest a
+layout inside it, or apply it to the same element as one.
+
+```html
+<div class="lr-center" style="--max: 60rem">
+  <article class="lr-stack lr-gap-md"> … </article>
+</div>
+
+<!-- …or on the same element -->
+<main class="lr-center lr-stack lr-gap-lg" style="--max: 60rem"> … </main>
+```
+
+`--pad` doubles as a gutter: with border-box sizing it keeps content off the edges
+on viewports narrower than `--max`, while the column never grows past `--max`.
+
+Knobs: `--max` (60rem) · `--pad` (0)
+
 ## Modifiers
 
 Modifier classes set a knob, so they compose across every layout.
@@ -201,7 +218,7 @@ Modifier classes set a knob, so they compose across every layout.
 | Family    | Classes                                                  | Sets                                          |
 | --------- | -------------------------------------------------------- | --------------------------------------------- |
 | gap       | `.lr-gap-{0,xs,sm,md,lg,xl,2xl}`                         | `--gap`                                        |
-| pad       | `.lr-pad-{0,xs,sm,md,lg,xl,2xl}`                         | `--pad` (padding)                              |
+| pad       | `.lr-pad-{0,xs,sm,md,lg,xl,2xl}`                         | `padding` (works on any element)               |
 | items     | `.lr-items-{start,center,end,stretch,baseline}`          | `--items` (`align-items`)                      |
 | justify   | `.lr-justify-{start,center,end,between,around,evenly}`   | `--justify` (`justify-content`)                |
 | wrap      | `.lr-wrap`, `.lr-nowrap`, `.lr-wrap-reverse`             | `--wrap` (`flex-wrap`)                         |
@@ -248,9 +265,10 @@ newer in Safari (18.2) but degrades gracefully where unsupported.
 ## Development
 
 The library is authored in **SCSS** under `src/` and compiles to a single
-stylesheet at `dist/lrlayout.css`. There is intentionally **no `package.json` /
-`node_modules`** — use whichever Sass compiler and static server you already
-trust. Pick one of the setups below.
+stylesheet at `dist/lrlayout.css`. A `package.json` exists for npm publishing;
+it has no dev dependencies, so **no `node_modules`** are needed for development.
+Use whichever Sass compiler and static server you already trust. Pick one of the
+setups below.
 
 You need two things while developing:
 
@@ -307,7 +325,14 @@ browser-sync start --server \
 
 ### One-off build
 
-To compile once without watching:
+To compile once without watching, use the npm script (requires `sass` installed
+globally):
+
+```bash
+npm run build
+```
+
+Or invoke Sass directly:
 
 ```bash
 sass src/lrlayout.scss dist/lrlayout.css --no-source-map --style=expanded
@@ -318,3 +343,20 @@ sass src/lrlayout.scss dist/lrlayout.css --no-source-map --style=expanded
 The `showcase/` directory demonstrates each layout class on its own page, plus a
 combined **full-page app** example at `showcase/combined.html` that composes all
 of them. Start a server (above) and open `showcase/index.html`.
+
+## Releasing
+
+Before cutting a release, bump the version in `package.json`:
+
+```bash
+npm version patch --no-git-tag-version
+```
+
+Use `patch` for bug fixes, `minor` for new features, `major` for breaking
+changes. The `--no-git-tag-version` flag updates `package.json` without
+creating a commit or tag — commit the version bump yourself as part of your
+normal flow.
+
+Once the version is committed and pushed, create a GitHub Release. The
+[publish workflow](.github/workflows/publish.yml) triggers on release and runs
+`npm publish` automatically.

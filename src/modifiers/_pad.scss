@@ -1,20 +1,22 @@
 // =============================================================================
 // Pad modifiers
 // -----------------------------------------------------------------------------
-// Set the --pad knob from the spacing scale, e.g. .lr-pad-md. Every layout
-// applies `padding: var(--pad, 0)`, so this adds inner spacing to any of them.
-// Generated from the single-source $space map.
+// Set padding directly from the spacing scale, e.g. .lr-pad-md. Works on any
+// element — no layout primitive required. The modifiers layer sits above the
+// layouts layer, so when a modifier and a primitive are both present, the
+// modifier wins (both resolve to the same value anyway).
 //
-//   <div class="lr-stack lr-pad-md"> … </div>     →  --pad: var(--lr-space-md)
+//   <div class="lr-pad-md"> … </div>              →  padding: 1rem (standalone)
+//   <div class="lr-stack lr-pad-md"> … </div>     →  padding: 1rem (on primitive)
 // =============================================================================
 
 @use "sass:map";
 @use "../tokens";
 
 @layer lrlayout.modifiers {
-  @each $name in map.keys(tokens.$space) {
+  @each $name, $value in tokens.$space {
     .lr-pad-#{$name} {
-      --pad: var(--lr-space-#{$name});
+      padding: #{$value};
     }
   }
 }

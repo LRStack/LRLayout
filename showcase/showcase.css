@@ -96,9 +96,9 @@ code {
 }
 
 /* --- Page shell ----------------------------------------------------------- */
+/* Width + centring are the library's job now: the markup makes this main an
+   .lr-center (--max: 64rem). Only the cosmetic page padding lives here. */
 .page {
-  max-width: 64rem;
-  margin-inline: auto;
   padding: 2rem 1.25rem 4rem;
 }
 
@@ -276,11 +276,10 @@ textarea.field {
   margin: 0;
 }
 
-/* Width wrapper for frame demos (the library has no width utility) + a dark
-   backdrop so object-fit: contain letterboxing is visible. Cosmetic only. */
+/* Frame demos are capped + centred by .lr-center (--max: 32rem) in the markup;
+   these rules are cosmetic only — rounded corners + a dark backdrop so
+   object-fit: contain letterboxing is visible. */
 .media {
-  max-width: 32rem;
-  margin-inline: auto;
   border-radius: 10px;
   overflow: hidden;
 }

@@ -1,0 +1,25 @@
+// =============================================================================
+// Center
+// -----------------------------------------------------------------------------
+// A horizontally-centered content column. Caps its inline size at --max and
+// centers itself in its container with auto inline margins — the page / content
+// wrapper most layouts sit inside, and usually the first primitive a page
+// reaches for.
+//
+// It stays a plain block (no flex of its own) so it composes both ways: nest a
+// layout inside it, or apply it to the same element as one
+// (class="lr-center lr-stack"). With border-box sizing, --pad acts as an inner
+// gutter that keeps content off the edges on viewports narrower than --max,
+// without ever letting the column exceed --max.
+//
+// Knobs: --max (maximum inline size), --pad (inner gutter).
+// =============================================================================
+
+@layer lrlayout.layouts {
+  .lr-center {
+    box-sizing: border-box;
+    max-inline-size: var(--max, 60rem);
+    margin-inline: auto;
+    padding: var(--pad, 0);
+  }
+}

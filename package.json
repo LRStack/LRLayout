@@ -1,6 +1,6 @@
 {
   "name": "@lrstack/lrlayout",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A collection of CSS layout classes. Responsiveness built in.",
   "keywords": [
     "css",
