@@ -14,16 +14,25 @@
   ],
   "license": "MIT",
   "author": "LRStack",
-  "repository": "github:LRStack/LRLayout",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LRStack/LRLayout.git"
+  },
   "homepage": "https://github.com/LRStack/LRLayout#readme",
   "bugs": "https://github.com/LRStack/LRLayout/issues",
   "publishConfig": {
     "access": "public"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "sass": "./src/lrlayout.scss",
   "style": "./dist/lrlayout.css",
-  "sideEffects": ["*.css", "*.scss"],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "build": "sass src/lrlayout.scss dist/lrlayout.css --no-source-map --style=expanded",
     "prepublishOnly": "npm run build"
