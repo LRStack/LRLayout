@@ -91,7 +91,8 @@ fallbacks. Drive a knob two ways; both land on the same `var()`:
 ```
 
 Knobs are registered with `@property … { inherits: false }`, so a value set on one
-layout never leaks into a nested one.
+layout never leaks into a nested one. (The single deliberate exception is flank's
+`--flank-basis`, which inherits on purpose — see [flank](#flank).)
 
 ## Layouts
 
@@ -164,8 +165,21 @@ markup order.
 </div>
 ```
 
-Knobs: `--side` (16rem) · `--content-min` (50%) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
+Knobs: `--side` (16rem) · `--flank-basis` (16rem, inherits) · `--content-min` (50%) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
 Modifier: `.lr-flank-end`
+
+`--side` sizes the sidebar on a single flank. `--flank-basis` does the same but
+**inherits**, so setting it once on an ancestor — say a `<form>` — gives every
+nested flank the same sidebar width. That's the way to line up a column of form
+labels: make each `<label>` a flank and set the column width on the form.
+`--side` wins when both are set.
+
+```html
+<form class="lr-stack lr-gap-md" style="--flank-basis: 8rem">
+  <label class="lr-flank lr-items-center"><span>Full name</span><input /></label>
+  <label class="lr-flank lr-items-center"><span>Email address</span><input /></label>
+</form>
+```
 
 ### grid
 

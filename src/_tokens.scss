@@ -49,6 +49,18 @@ $knobs: gap, pad, items, justify, wrap, ratio, object, side, content-min, min,
   }
 }
 
+// --- The one inheriting knob -------------------------------------------------
+// flank's sidebar width also accepts --flank-basis, which is registered with
+// inherits: true on purpose. Set it once on an ancestor (e.g. a <form>) and
+// every nested flank shares that sidebar width — the way to line up a column of
+// form labels. The per-instance --side above still wins when both are present.
+// No initial-value, so when it is set nowhere it stays invalid-at-computed-value
+// and var(--flank-basis, <fallback>) resolves to the literal fallback.
+@property --flank-basis {
+  syntax: "*";
+  inherits: true;
+}
+
 // --- Emit the spacing scale --------------------------------------------------
 // In the tokens layer so a consumer can retune the scale with a plain,
 // unlayered :root override.

@@ -9,8 +9,11 @@
 // Source order is sidebar-first. Add .lr-flank-end to move the sidebar to the
 // other side without changing the markup order.
 //
-// Knobs: --side (sidebar width), --content-min (wrap threshold), --gap,
-//        --items (align-items), --pad.
+// Knobs: --side (sidebar width, per-instance), --flank-basis (sidebar width that
+//        *inherits* — set it once on an ancestor, e.g. a <form>, and every
+//        nested flank picks up the same width; handy for aligning a column of
+//        form labels. --side still wins when both are set), --content-min (wrap
+//        threshold), --gap, --items (align-items), --pad.
 // =============================================================================
 
 @layer lrlayout.layouts {
@@ -24,8 +27,11 @@
   }
 
   // Sidebar (first child): a preferred width that can shrink/grow to fill a row.
+  // Width resolves per-instance --side first, then an inherited --flank-basis
+  // (so one declaration on an ancestor can size a whole column of flanks), then
+  // the literal default.
   .lr-flank > :first-child {
-    flex-basis: var(--side, 16rem);
+    flex-basis: var(--side, var(--flank-basis, 16rem));
     flex-grow: 1;
   }
 
@@ -47,7 +53,7 @@
   }
 
   .lr-flank-end > :last-child {
-    flex-basis: var(--side, 16rem);
+    flex-basis: var(--side, var(--flank-basis, 16rem));
     flex-grow: 1;
     min-inline-size: auto; // clear the base rule's content-min on the sidebar
   }

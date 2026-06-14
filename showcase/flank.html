@@ -119,6 +119,55 @@
           </div>
         </div>
       </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Form rows: aligned labels</h2>
+          <p class="note">
+            Each row is a <code>&lt;label&gt;</code> that is itself a
+            <code>.lr-flank</code> — the label text is the sidebar, the field
+            fills the rest. The <code>&lt;form&gt;</code> is an
+            <code>.lr-stack</code>. Setting <code>--flank-basis</code> once on the
+            form sizes every row's label column to the same width, so they line
+            up at the widest label. Unlike the per-instance <code>--side</code>,
+            <code>--flank-basis</code> <em>inherits</em>, so a single declaration
+            covers all the rows.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <p class="callout lr-cluster lr-items-baseline lr-gap-sm">
+            Narrow the window — each label wraps above its field.
+          </p>
+          <form class="lr-stack lr-gap-md" style="--flank-basis: 8rem">
+            <label class="lr-flank lr-items-center lr-gap-sm">
+              <span class="field-label">Full name</span>
+              <input class="field" type="text" name="name" autocomplete="name" />
+            </label>
+            <label class="lr-flank lr-items-center lr-gap-sm">
+              <span class="field-label">Email address</span>
+              <input
+                class="field"
+                type="email"
+                name="email"
+                autocomplete="email"
+              />
+            </label>
+            <label class="lr-flank lr-items-center lr-gap-sm">
+              <span class="field-label">Company</span>
+              <input
+                class="field"
+                type="text"
+                name="company"
+                autocomplete="organization"
+              />
+            </label>
+            <label class="lr-flank lr-items-start lr-gap-sm">
+              <span class="field-label">Message</span>
+              <textarea class="field" name="message" rows="3"></textarea>
+            </label>
+          </form>
+        </div>
+      </section>
     </main>
   </body>
 </html>

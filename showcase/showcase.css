@@ -204,6 +204,35 @@ code {
   border: 1px solid var(--sc-box-line);
 }
 
+/* --- Form rows (flank demo) ----------------------------------------------- */
+/* Cosmetic only. The arrangement is the library's job: each <label> is an
+   .lr-flank (label text = sidebar, field = main) and the <form> is an .lr-stack.
+   These rules just make the controls legible. No widths here — the field fills
+   the flank's main region and the label column width comes from --flank-basis in
+   the markup. */
+.field-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--sc-ink);
+}
+.field {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--sc-ink);
+  background: #fff;
+  border: 1px solid var(--sc-line);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+}
+.field:focus-visible {
+  outline: 2px solid var(--sc-accent);
+  outline-offset: 1px;
+  border-color: var(--sc-accent);
+}
+textarea.field {
+  resize: vertical;
+}
+
 /* Panels used to visualise flank regions */
 .panel {
   background: var(--sc-soft);
