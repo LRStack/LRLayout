@@ -399,6 +399,78 @@ textarea.field {
   border-radius: 10px;
 }
 
+/* --- overlay demo --------------------------------------------------------- */
+/* Cosmetic only. The positioning, centring, and corner-pinning are the
+   .lr-overlay host + .lr-overlay-item (and its placement modifiers) in the
+   markup; these rules only give the demo elements their own intrinsic size and
+   colour so there's something to float and something to float it over. */
+.avatar {
+  display: block;
+  inline-size: 4.5rem;
+  block-size: 4.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.badge {
+  min-inline-size: 1.3rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: #e11d48;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid var(--sc-surface);
+}
+.play {
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(20, 24, 40, 0.55);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+/* A host with a visible boundary + height, so every placement lands somewhere
+   you can see. The height is just demo scaffolding, like .scrollbox. */
+.overlay-grid {
+  block-size: 14rem;
+  background: var(--sc-surface);
+  border: 1px dashed var(--sc-box-line);
+  border-radius: 10px;
+}
+.pin {
+  background: var(--sc-box);
+  color: var(--sc-box-ink);
+  border: 1px solid var(--sc-box-line);
+  border-radius: 6px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.pin--mid {
+  background: var(--sc-accent);
+  color: #fff;
+  border-color: var(--sc-accent);
+}
+/* A dim backdrop with height, so the contain demo has a region to sit over. */
+.backdrop {
+  block-size: 15rem;
+  background: radial-gradient(120% 120% at 50% 0%, #3b4256, #1d2230);
+  border-radius: 10px;
+}
+.dialog {
+  inline-size: min(20rem, 100%);
+  background: var(--sc-surface);
+  border-radius: 10px;
+  box-shadow: var(--sc-shadow);
+}
+.dialog__body {
+  padding: 1rem 1.1rem;
+}
+
 /* --- Combined example: full-page app ------------------------------------- */
 /* The shell fills the viewport so the example reads as a real app rather than a
    demo. All internal layout is lr-* primitives; this is cosmetic only. */

@@ -1,0 +1,66 @@
+// =============================================================================
+// Overlay
+// -----------------------------------------------------------------------------
+// Floats one child *over* the region's other content — a play button on a
+// frame, a badge on an avatar, a dialog over a backdrop. Where frame and cover
+// center content that stays in flow, overlay takes a child *out of flow* and
+// positions it on top; the rest of the region is undisturbed. (The classic
+// "imposter" from intrinsic-layout lore.)
+//
+// Two classes, mirroring cover's container + child-marker split:
+//   .lr-overlay        — the host. Sets a positioning context and nothing else,
+//                        so it composes onto any element or primitive
+//                        (class="lr-frame lr-overlay" makes a frame the host).
+//   .lr-overlay-item   — the floated child, centered by default.
+//
+// Centering is done with inset:0 + margin:auto rather than a translate: the
+// auto margins soak up the free space on each axis, so the item lands centered
+// with no knowledge of its own size and no transform. fit-content keeps the
+// item shrink-wrapped while capping it to the host, so it can't spill sideways.
+//
+// Knobs: --inset (offset from the pinned edges; also the contain margin).
+// Placement modifiers: .lr-overlay-{top,bottom,start,end} (combine two for a
+// corner). Contain: .lr-overlay-contain (cap to the host and scroll internally).
+// =============================================================================
+
+@layer lrlayout.layouts {
+  // Host: a positioning context only, so it layers onto anything. isolate keeps
+  // the item's stacking contained, so its paint order can't escape the host.
+  .lr-overlay {
+    position: relative;
+    isolation: isolate;
+  }
+
+  // The floated child. Symmetric insets + auto margins center it on both axes.
+  .lr-overlay > .lr-overlay-item {
+    position: absolute;
+    inset: var(--inset, 0);
+    margin: auto;
+    inline-size: fit-content;
+    block-size: fit-content;
+  }
+
+  // Placement: drop the constraint on one edge so the box is pulled to the
+  // other. With one inset auto, that axis' auto margins collapse to 0 and the
+  // item pins to the remaining edge. Two together make a corner.
+  .lr-overlay > .lr-overlay-top {
+    inset-block-end: auto;
+  }
+  .lr-overlay > .lr-overlay-bottom {
+    inset-block-start: auto;
+  }
+  .lr-overlay > .lr-overlay-start {
+    inset-inline-end: auto;
+  }
+  .lr-overlay > .lr-overlay-end {
+    inset-inline-start: auto;
+  }
+
+  // Contain: cap the item to the host (minus --inset on each side) and let it
+  // scroll internally, so a tall item can't bleed past the host's edges.
+  .lr-overlay > .lr-overlay-contain {
+    max-inline-size: calc(100% - 2 * var(--inset, 0px));
+    max-block-size: calc(100% - 2 * var(--inset, 0px));
+    overflow: auto;
+  }
+}

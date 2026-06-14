@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>overlay · LRLayout</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <link rel="stylesheet" href="showcase.css" />
+  </head>
+  <body>
+    <header class="site-header lr-split lr-items-center">
+      <a class="brand" href="index.html">LR<span>Layout</span></a>
+      <nav class="site-nav lr-cluster lr-gap-xs" aria-label="Primitives">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="cluster.html">cluster</a>
+        <a class="nav-link" href="switcher.html">switcher</a>
+        <a class="nav-link" href="stack.html">stack</a>
+        <a class="nav-link" href="split.html">split</a>
+        <a class="nav-link" href="frame.html">frame</a>
+        <a class="nav-link" href="flank.html">flank</a>
+        <a class="nav-link" href="grid.html">grid</a>
+        <a class="nav-link" href="center.html">center</a>
+        <a class="nav-link" href="cover.html">cover</a>
+        <a class="nav-link" href="overlay.html" aria-current="page">overlay</a>
+        <a class="nav-link" href="combined.html">combined</a>
+      </nav>
+    </header>
+
+    <main class="page lr-center lr-stack lr-gap-xl" style="--max: 64rem">
+      <div class="page-header lr-stack lr-gap-xs">
+        <h1>overlay</h1>
+        <p class="lead">
+          Floats one child <em>over</em> the region's other content — a play
+          button on a <a href="frame.html">frame</a>, a badge on an avatar, a
+          dialog over a backdrop. Where <code>frame</code> and
+          <code>cover</code> center content that stays in flow,
+          <code>overlay</code> takes a child <em>out of flow</em> and positions
+          it on top; the rest of the region is undisturbed. (The classic
+          <em>imposter</em> of intrinsic-layout lore.)
+        </p>
+      </div>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A play button over media</h2>
+          <p class="note">
+            The host is any element — here a <a href="frame.html">frame</a> with
+            <code>lr-overlay</code> added. The image fills the frame as usual;
+            the <code>.lr-overlay-item</code> button is lifted out of flow and
+            centered on top, so it never disturbs the media. Default placement is
+            dead center, both axes.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="media lr-center" style="--max: 32rem">
+            <div class="lr-frame lr-overlay">
+              <img src="img/sample-1.svg" alt="Abstract gradient artwork" />
+              <button class="play lr-overlay-item" type="button" aria-label="Play">
+                ▶
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A badge pinned to a corner</h2>
+          <p class="note">
+            Add a placement modifier to leave the center. Each modifier drops the
+            constraint on one edge, pulling the item to the other;
+            <code>lr-overlay-top</code> + <code>lr-overlay-end</code> together
+            make a corner. <code>--inset</code> (set on the item) holds it a hair
+            off the edge.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-cluster lr-gap-xl">
+            <div class="lr-overlay">
+              <img class="avatar" src="img/sample-2.svg" alt="Person" />
+              <span
+                class="badge lr-overlay-item lr-overlay-top lr-overlay-end"
+                style="--inset: 0.1rem"
+                >3</span
+              >
+            </div>
+            <div class="lr-overlay">
+              <img class="avatar" src="img/sample-3.svg" alt="Person" />
+              <span
+                class="badge lr-overlay-item lr-overlay-bottom lr-overlay-end"
+                style="--inset: 0.1rem; background: #16a34a"
+                aria-label="Online"
+              ></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Every placement</h2>
+          <p class="note">
+            With no modifier the item centers. The four edge modifiers
+            (<code>top</code>, <code>bottom</code>, <code>start</code>,
+            <code>end</code>) pin to an edge; any two non-opposite ones compose a
+            corner. All nine items below share one host — they're all
+            <code>.lr-overlay-item</code>, differing only by modifier. Edges and
+            corners are logical, so they flip under RTL.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-overlay overlay-grid">
+            <span class="pin lr-overlay-item lr-overlay-top lr-overlay-start" style="--inset: 0.6rem">top · start</span>
+            <span class="pin lr-overlay-item lr-overlay-top" style="--inset: 0.6rem">top</span>
+            <span class="pin lr-overlay-item lr-overlay-top lr-overlay-end" style="--inset: 0.6rem">top · end</span>
+            <span class="pin lr-overlay-item lr-overlay-start" style="--inset: 0.6rem">start</span>
+            <span class="pin pin--mid lr-overlay-item">center</span>
+            <span class="pin lr-overlay-item lr-overlay-end" style="--inset: 0.6rem">end</span>
+            <span class="pin lr-overlay-item lr-overlay-bottom lr-overlay-start" style="--inset: 0.6rem">bottom · start</span>
+            <span class="pin lr-overlay-item lr-overlay-bottom" style="--inset: 0.6rem">bottom</span>
+            <span class="pin lr-overlay-item lr-overlay-bottom lr-overlay-end" style="--inset: 0.6rem">bottom · end</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>A dialog that can't overflow</h2>
+          <p class="note">
+            Add <code>lr-overlay-contain</code> and the item caps itself to the
+            host (minus <code>--inset</code> on every side) and scrolls
+            internally — so a tall dialog stays parked inside the region instead
+            of bleeding past its edges. The backdrop is just the host's own
+            content, sitting in normal flow underneath.
+          </p>
+        </div>
+        <div class="stage lr-pad-lg">
+          <div class="lr-overlay">
+            <div class="backdrop"></div>
+            <div
+              class="dialog lr-overlay-item lr-overlay-contain"
+              style="--inset: 1.25rem"
+            >
+              <div class="dialog__body lr-stack lr-gap-sm">
+                <h3 class="card__title">Terms of service</h3>
+                <p class="card__text">
+                  This dialog is taller than its backdrop, so without
+                  <code>contain</code> it would spill out the top and bottom.
+                </p>
+                <p class="card__text">
+                  Instead it stops at the host's edges and scrolls. Keep
+                  reading — there's more below the fold, reachable by the
+                  dialog's own scrollbar, not the page's.
+                </p>
+                <p class="card__text">
+                  The auto-margin centering still applies on the axis that fits,
+                  so a short dialog would sit dead center; only the overflowing
+                  axis is clamped.
+                </p>
+                <p class="card__text">
+                  And because the cap is <code>100%</code> minus
+                  <code>--inset</code>, the same knob that offsets a corner badge
+                  also sets the dialog's breathing room here.
+                </p>
+                <div class="lr-cluster lr-gap-sm">
+                  <button class="btn" type="button">Accept</button>
+                  <button class="btn btn--ghost" type="button">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

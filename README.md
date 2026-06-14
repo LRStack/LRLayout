@@ -16,6 +16,7 @@ custom-property "knobs" that you set directly or via ready-made modifier classes
 - [`grid`](#grid) — auto-fitting responsive columns
 - [`center`](#center) — a max-width content column, centered in its container
 - [`cover`](#cover) — a region that fills the viewport with a centered child
+- [`overlay`](#overlay) — a child floated over the rest, centered or pinned
 
 ## Installation
 
@@ -274,6 +275,68 @@ centering — put the marker on a wrapper element, or scope your reset with
 `:where()` so it doesn't outrank the library layer. Note also that `--min` is
 shared with [`grid`](#grid) (min column width there); they only collide if both
 classes land on the same element, which is a meaningless combination.
+
+### overlay
+
+Floats one child *over* the region's other content — a play button on a
+[`frame`](#frame), a badge on an avatar, a dialog over a backdrop. Where `frame`
+and `cover` center content that stays in flow, `overlay` takes a child *out of
+flow* and positions it on top, leaving the rest of the region undisturbed. (The
+classic "imposter" of intrinsic-layout lore.) Like [`cover`](#cover) it's a
+container plus a child marker:
+
+- `.lr-overlay` on the host establishes the positioning context **and nothing
+  else**, so it composes onto any element or primitive — add it to a `frame` and
+  the frame becomes the stage.
+- `.lr-overlay-item` on the floated child centers it over the host by default.
+
+```html
+<!-- a play button centered over a frame -->
+<div class="lr-frame lr-overlay">
+  <img src="photo.jpg" alt="" />
+  <button class="lr-overlay-item">▶</button>
+</div>
+```
+
+Centering uses symmetric insets plus `margin: auto` (not a `translate`), so the
+item lands centered with no knowledge of its own size, and `fit-content` keeps it
+shrink-wrapped and capped to the host so it can't spill sideways.
+
+To leave the center, add a **placement modifier** to the item. Each one drops the
+constraint on a single edge, pulling the item to the opposite one; combine two
+non-opposite modifiers for a corner. They're logical (`start`/`end`), so corners
+flip under RTL.
+
+```html
+<!-- a notification badge in the top-trailing corner -->
+<div class="lr-overlay">
+  <img class="avatar" src="me.jpg" alt="" />
+  <span class="lr-overlay-item lr-overlay-top lr-overlay-end" style="--inset: .15rem">3</span>
+</div>
+```
+
+`--inset` holds the item that far off its pinned edges (default `0`); set it on
+the **item**, the element that reads it. For content that can outgrow the host —
+a tall dialog — add `.lr-overlay-contain`: the item caps itself to the host
+(minus `--inset` on each side) and scrolls internally rather than bleeding past
+the edges.
+
+```html
+<div class="lr-overlay">
+  <div class="backdrop"></div>
+  <div class="lr-overlay-item lr-overlay-contain" style="--inset: 1rem"> … </div>
+</div>
+```
+
+Knobs: `--inset` (0, set on the item)
+Classes: `.lr-overlay` (host) · `.lr-overlay-item` (child) · `.lr-overlay-{top,bottom,start,end}` (placement) · `.lr-overlay-contain`
+
+A host that clips its overflow — `frame` does, via `overflow: hidden` — also
+clips an overlay item larger than itself. That's usually what you want for a
+media overlay, but it means a tooltip or menu that needs to escape the host's
+box wants a plain (non-clipping) host instead. `overlay` positions *within* a
+container; for a modal over the whole page, make a full-viewport element the
+host (or override the item to `position: fixed` in your own CSS).
 
 ## Modifiers
 

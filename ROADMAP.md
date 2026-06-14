@@ -17,9 +17,12 @@ Classic intrinsic-layout primitives with no current equivalent.
   with a vertically-centered principal child (`.lr-cover-center`) and optional
   pinned header/footer. The library's block-axis centering primitive. See the
   `cover` section in `README.md`.
-- **imposter / overlay** — an absolutely-positioned centered box over another
-  (modal, badge, a play button on a `frame`). `frame` centers *media* but can't
-  position an arbitrary overlay.
+- ~~**imposter / overlay**~~ — *shipped* as `overlay`. An out-of-flow child
+  positioned over the host's other content (play button on a `frame`, corner
+  badge, dialog over a backdrop): a `.lr-overlay` host (positioning context only)
+  plus a `.lr-overlay-item` child, centered by default with
+  `top`/`bottom`/`start`/`end` placement modifiers and a `.lr-overlay-contain`
+  option. See the `overlay` section in `README.md`.
 - **two-sided flank** — `flank` is single-sidebar only; no sidebar-both-ends
   layout.
 
