@@ -398,6 +398,8 @@ Modifier classes set a knob, so they compose across every layout.
 | items     | `.lr-items-{start,center,end,stretch,baseline}`          | `--items` (`align-items`)                      |
 | justify   | `.lr-justify-{start,center,end,between,around,evenly}`   | `--justify` (`justify-content`)                |
 | content   | `.lr-content-{start,center,end,stretch,between,around,evenly}` | `--content` (`align-content`, multi-line) |
+| self†     | `.lr-self-{start,center,end,stretch,baseline}`           | `align-self` (one item overrides `--items`)    |
+| push†     | `.lr-push-{start,end}`                                   | `margin-inline-{end,start}: auto` (shove one item to that edge) |
 | cols      | `.lr-cols-{fit,fill}`                                    | `--cols` (`auto-fit` / `auto-fill`)            |
 | wrap      | `.lr-wrap`, `.lr-nowrap`, `.lr-wrap-reverse`             | `--wrap` (`flex-wrap`)                         |
 | scroll    | `.lr-scroll`, `.lr-scroll-x`, `.lr-scroll-y`             | overflow (+ `scrollbar-gutter` on vertical)    |
@@ -409,6 +411,15 @@ The gap/pad spacing scale (`--lr-space-*`):
 | ----- | --- | ------ | ----- | ---- | ------ | ---- | ---- |
 | value | 0   | .25rem | .5rem | 1rem | 1.5rem | 2rem | 3rem |
 
+- **† self / push** — these target a single **item** (a child of the layout),
+  not the container. `.lr-self-*` overrides the container's `--items` for one
+  child — e.g. `.lr-items-center` on a `cluster`, `.lr-self-start` on one item to
+  let it top-align alone. `.lr-push-*` puts an auto-margin on the **main (inline)
+  axis** so the item — and everything after it — slides to the named edge; the
+  named edge is where the item *goes* (like `.lr-overlay-end`), so a single
+  trailing CTA in a flex-start `cluster` gets `.lr-push-end`. Push is inline-axis
+  only, so it does nothing in a vertical `stack` (whose main axis is the block
+  axis).
 - **scroll** — the vertical variants reserve a stable scrollbar gutter
   (`scrollbar-gutter: var(--gutter, stable)`) to avoid layout shift; tune with
   `--gutter` (`auto`, `stable both-edges`).

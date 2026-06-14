@@ -158,6 +158,42 @@
           </div>
         </div>
       </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Breaking one item out of the group</h2>
+          <p class="note">
+            Container alignment (<code>--items</code> / <code>--justify</code>)
+            moves every child together. To let a <em>single</em> item escape that,
+            mark the child: <code>.lr-self-*</code> overrides the cross-axis
+            alignment for one item, and <code>.lr-push-*</code> shoves one item
+            (and everything after it) to an edge with an auto-margin.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label"
+            >.lr-push-end &nbsp;— a trailing item slides to the far edge</span
+          >
+          <div class="lr-cluster lr-gap-sm">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="#">Docs</a>
+            <a class="nav-link" href="#">Pricing</a>
+            <button class="btn lr-push-end">Sign in</button>
+          </div>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <span class="stage__label"
+            >.lr-self-* &nbsp;— one item ignores the row's
+            <code>.lr-items-end</code></span
+          >
+          <div class="lr-cluster lr-items-end lr-gap-sm">
+            <div class="box box--tall">.lr-items-end<br />sets the row</div>
+            <div class="box lr-self-start">.lr-self-start</div>
+            <div class="box lr-self-center">.lr-self-center</div>
+            <div class="box lr-self-stretch">.lr-self-stretch</div>
+          </div>
+        </div>
+      </section>
     </main>
   </body>
 </html>

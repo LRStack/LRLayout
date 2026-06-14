@@ -73,6 +73,37 @@
       });
 
       // ======================================================================
+      // self — align-self on one item, overriding the container's --items
+      // ======================================================================
+      test("self: .lr-self-start → align-self flex-start on the item", () => {
+        const c = el(`<div class="lr-cluster lr-items-end"><span class="lr-self-start">a</span></div>`);
+        assertEq("align-self", style(c.firstElementChild, "alignSelf"), "flex-start");
+        assertEq("container still align-items end", style(c, "alignItems"), "flex-end");
+      });
+      test("self: .lr-self-baseline → align-self baseline", () => {
+        const c = el(`<div class="lr-cluster"><span class="lr-self-baseline">a</span></div>`);
+        assertEq("align-self", style(c.firstElementChild, "alignSelf"), "baseline");
+      });
+
+      // ======================================================================
+      // push — main-axis auto-margin shoving one item to an edge
+      // ======================================================================
+      // getComputedStyle resolves an auto margin to its used length, so assert the
+      // geometric effect (the item is shoved to the edge) rather than the keyword.
+      test("push: .lr-push-end shoves the marked item to the end edge", () => {
+        const c = el(`<div class="lr-cluster" style="width:400px"><span>a</span><span class="lr-push-end">b</span></div>`);
+        const pushed = c.lastElementChild;
+        assertNear("hugs the end edge", pushed.offsetLeft + pushed.offsetWidth, 400, 8);
+      });
+      test("push: .lr-push-start shoves following items to the end edge", () => {
+        // margin-inline-end:auto on the first item absorbs the trailing space,
+        // pushing its sibling against the end edge.
+        const c = el(`<div class="lr-cluster" style="width:400px"><span class="lr-push-start">a</span><span>b</span></div>`);
+        const sibling = c.lastElementChild;
+        assertNear("sibling hugs the end edge", sibling.offsetLeft + sibling.offsetWidth, 400, 8);
+      });
+
+      // ======================================================================
       // content — align-content knob (multi-line distribution), shared across
       // grid / cluster / split
       // ======================================================================

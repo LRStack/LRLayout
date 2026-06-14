@@ -1,0 +1,24 @@
+// =============================================================================
+// Self modifiers
+// -----------------------------------------------------------------------------
+// Set align-self on a single flex/grid ITEM, overriding the container's --items
+// (align-items) for that one child — the per-item counterpart to .lr-items-*.
+// e.g. .lr-self-start lets one item top-align in a cluster/split whose siblings
+// stay centered. Targets a child, not the container (like .lr-cover-center).
+//
+// Reuses _items.scss's $items map so the vocabulary stays identical to
+// .lr-items-* (start/center/end/stretch/baseline). flex-start / flex-end are
+// valid on grid items too (computed as start / end), so this composes on cluster,
+// split, flank, and grid alike.
+// =============================================================================
+
+@use "sass:map";
+@use "items";
+
+@layer lrlayout.modifiers {
+  @each $name, $value in items.$items {
+    .lr-self-#{$name} {
+      align-self: #{$value};
+    }
+  }
+}

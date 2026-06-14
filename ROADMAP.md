@@ -51,9 +51,12 @@ Classic intrinsic-layout primitives with no current equivalent.
 - ~~**`align-content`**~~ — *shipped.* `--content` + the `.lr-content-*` modifier
   family set `align-content` (multi-line block-axis distribution) on `grid`,
   `cluster`, and `split`. See the gap/alignment notes in `README.md`.
-- **Self-alignment** — no `align-self` override or auto-margin helper to push one
-  item to the end of a `cluster` / `split`. A single item can't break from the
-  group's alignment today.
+- ~~**Self-alignment**~~ — *shipped.* Two per-item modifier families let a single
+  child break from the group: `.lr-self-*` (`align-self`, the per-item counterpart
+  to `.lr-items-*`) and `.lr-push-start` / `.lr-push-end` (main-axis auto-margin
+  shoving one item to an edge). See the modifiers table in `README.md`; design
+  record in `docs/self-alignment.md`. (Block-axis bottom-pin stays the separate
+  **`stack` bottom-pin** item below — push is inline-axis only.)
 - **Bottom sticky** — sticky is top-only (`--sticky-top` / `top` hardcoded). No
   bottom-pinning variant for footer bars.
 - **`order`** — no helper for source-order-independent reordering (only flank's

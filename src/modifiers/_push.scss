@@ -1,0 +1,28 @@
+// =============================================================================
+// Push modifiers
+// -----------------------------------------------------------------------------
+// Auto-margin on the MAIN (inline) axis: an item's margin swells to absorb the
+// free space on one side, shoving that item — and everything after it — to the
+// far edge. The classic flexbox trick for breaking one child out of the group,
+// e.g. a trailing CTA in an otherwise flex-start cluster nav. Targets a child,
+// not the container.
+//
+//   [Home] [Docs] [Pricing] ················· [Sign in]   ← .lr-push-end on "Sign in"
+//
+// The named edge is where the item GOES (matching .lr-overlay-start/-end), not
+// what it pushes. Logical (margin-inline-*), so it flips under RTL.
+//
+// Inline-axis only — meaningful on the row flex primitives (cluster, split). A
+// vertical stack's main axis is the block axis; bottom-pinning a stack's last
+// child is a separate concern (see "stack bottom-pin" in ROADMAP.md), not this.
+// =============================================================================
+
+@layer lrlayout.modifiers {
+  .lr-push-end {
+    margin-inline-start: auto;
+  }
+
+  .lr-push-start {
+    margin-inline-end: auto;
+  }
+}
