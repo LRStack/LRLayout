@@ -35,6 +35,7 @@
   ],
   "scripts": {
     "build": "sass src/lrlayout.scss dist/lrlayout.css --no-source-map --style=expanded",
+    "test": "bash test/run.sh",
     "prepublishOnly": "npm run build"
   }
 }

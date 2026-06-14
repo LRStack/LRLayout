@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LRLayout tests — modifiers</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <style>
+      body { margin: 0; }
+      #fixtures > * { margin-bottom: 2rem; }
+      #results { font: 13px/1.5 monospace; white-space: pre; padding: 1rem; }
+    </style>
+    <script src="runner.js"></script>
+  </head>
+  <body>
+    <div id="fixtures"></div>
+
+    <script>
+      const { test, assertNear, assertEq, el, rem, style, px } = LR;
+
+      // ======================================================================
+      // gap — drives --gap from the spacing scale
+      // ======================================================================
+      test("gap: .lr-gap-xs resolves to 0.25rem", () => {
+        const s = el(`<div class="lr-stack lr-gap-xs"><div>a</div><div>b</div></div>`);
+        assertNear("rowGap", px(s, "rowGap"), rem(0.25));
+      });
+
+      test("gap: .lr-gap-2xl resolves to 3rem on both axes", () => {
+        const g = el(`<div class="lr-grid lr-gap-2xl"><div>a</div></div>`);
+        assertNear("rowGap", px(g, "rowGap"), rem(3));
+        assertNear("columnGap", px(g, "columnGap"), rem(3));
+      });
+
+      // ======================================================================
+      // pad — sets padding directly, works standalone (no primitive)
+      // ======================================================================
+      test("pad: .lr-pad-md sets 1rem on a bare element", () => {
+        const d = el(`<div class="lr-pad-md">x</div>`);
+        assertEq("padding-top", style(d, "paddingTop"), "16px");
+        assertEq("padding-left", style(d, "paddingLeft"), "16px");
+      });
+
+      test("pad: .lr-pad-lg sets 1.5rem", () => {
+        assertNear("padding", px(el(`<div class="lr-pad-lg">x</div>`), "paddingTop"), rem(1.5));
+      });
+
+      // ======================================================================
+      // items / justify — align-items & justify-content knobs
+      // ======================================================================
+      test("items: .lr-items-end → align-items flex-end", () => {
+        assertEq("align-items", style(el(`<div class="lr-cluster lr-items-end"><span>a</span></div>`), "alignItems"), "flex-end");
+      });
+      test("items: .lr-items-baseline → align-items baseline", () => {
+        assertEq("align-items", style(el(`<div class="lr-cluster lr-items-baseline"><span>a</span></div>`), "alignItems"), "baseline");
+      });
+      test("justify: .lr-justify-center → justify-content center", () => {
+        assertEq("justify-content", style(el(`<div class="lr-cluster lr-justify-center"><span>a</span></div>`), "justifyContent"), "center");
+      });
+      test("justify: .lr-justify-evenly → justify-content space-evenly", () => {
+        assertEq("justify-content", style(el(`<div class="lr-split lr-justify-evenly"><span>a</span></div>`), "justifyContent"), "space-evenly");
+      });
+
+      // ======================================================================
+      // wrap — flex-wrap knob
+      // ======================================================================
+      test("wrap: .lr-nowrap → flex-wrap nowrap", () => {
+        assertEq("flex-wrap", style(el(`<div class="lr-cluster lr-nowrap"><span>a</span></div>`), "flexWrap"), "nowrap");
+      });
+      test("wrap: .lr-wrap-reverse → flex-wrap wrap-reverse", () => {
+        assertEq("flex-wrap", style(el(`<div class="lr-cluster lr-wrap-reverse"><span>a</span></div>`), "flexWrap"), "wrap-reverse");
+      });
+
+      // ======================================================================
+      // scroll — sets real overflow (not a knob); pins the cross axis
+      // ======================================================================
+      test("scroll: .lr-scroll → overflow auto + stable gutter", () => {
+        const s = el(`<div class="lr-stack lr-scroll"><div>a</div></div>`);
+        assertEq("overflow-x", style(s, "overflowX"), "auto");
+        assertEq("overflow-y", style(s, "overflowY"), "auto");
+        assertEq("scrollbar-gutter", style(s, "scrollbarGutter"), "stable");
+      });
+      test("scroll: .lr-scroll-x pins the cross axis to hidden", () => {
+        const s = el(`<div class="lr-stack lr-scroll-x"><div>a</div></div>`);
+        assertEq("overflow-x auto", style(s, "overflowX"), "auto");
+        assertEq("overflow-y hidden", style(s, "overflowY"), "hidden");
+      });
+      test("scroll: .lr-scroll-y pins the cross axis to hidden", () => {
+        const s = el(`<div class="lr-stack lr-scroll-y"><div>a</div></div>`);
+        assertEq("overflow-y auto", style(s, "overflowY"), "auto");
+        assertEq("overflow-x hidden", style(s, "overflowX"), "hidden");
+      });
+
+      // ======================================================================
+      // sticky — real position; --sticky-top offset
+      // ======================================================================
+      test("sticky: .lr-sticky → position sticky, top 0, align-self start", () => {
+        const s = el(`<div class="lr-sticky">x</div>`);
+        assertEq("position", style(s, "position"), "sticky");
+        assertEq("top", style(s, "top"), "0px");
+        assertEq("align-self", style(s, "alignSelf"), "start");
+      });
+      test("sticky: --sticky-top sets the offset", () => {
+        assertEq("top", style(el(`<div class="lr-sticky" style="--sticky-top:1rem">x</div>`), "top"), "16px");
+      });
+
+      // ======================================================================
+      // Cascade contracts
+      // ======================================================================
+      test("layer order: modifier wins over a primitive's own property", () => {
+        // .lr-stack sets padding:var(--pad,0); .lr-pad-lg lives in the higher
+        // modifiers layer and must win.
+        const s = el(`<div class="lr-stack lr-pad-lg"><div>a</div></div>`);
+        assertNear("padding from modifier", px(s, "paddingTop"), rem(1.5));
+      });
+
+      test("inline knob reaches the primitive's var()", () => {
+        assertEq("justify-content from inline --justify", style(el(`<div class="lr-cluster" style="--justify:center"><span>a</span></div>`), "justifyContent"), "center");
+      });
+
+      test("knob does NOT inherit into a nested layout (inherits:false)", () => {
+        const outer = el(`<div class="lr-cluster" style="--justify:center"><div class="lr-cluster"><span>a</span></div></div>`);
+        assertEq("nested keeps its own default", style(outer.firstElementChild, "justifyContent"), "flex-start");
+      });
+    </script>
+  </body>
+</html>

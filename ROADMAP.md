@@ -59,8 +59,15 @@ Classic intrinsic-layout primitives with no current equivalent.
 
 - **Minified build** — npm ships only the expanded `dist/lrlayout.css`; no
   `.min.css` and no shipped source map.
-- **Tests** — no visual-regression or rendering checks; the showcase is the only
-  verification surface.
+- ~~**Tests**~~ — *shipped.* `npm test` (`test/run.sh`) builds `dist/` and drives
+  a Chromium-family browser headless via `--dump-dom`, asserting computed-style
+  contracts and container-driven layout geometry against the real built CSS.
+  Zero-dependency: global `sass` plus an auto-detected browser (`$CHROME_BIN`
+  override; Linux/macOS — Windows not covered by design). Covers every layout
+  primitive and modifier plus the `@layer` / `@property` cascade contracts. Open
+  follow-ups: no **CI** runs it yet (a workflow would need to install a browser,
+  e.g. `apt-get install -y chromium`); no visual-regression / screenshot diffing
+  (the showcase remains the eyeball surface for that).
 - **CHANGELOG** — none yet.
 - **1.0 / API freeze** — currently `0.1.x`; the knob and class API isn't frozen.
 

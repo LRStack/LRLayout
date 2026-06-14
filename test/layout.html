@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LRLayout tests</title>
+    <!-- The real built artifact — same file consumers link. -->
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <style>
+      /* Harness-only chrome. No layout rules here — the primitives do that. */
+      #fixtures > * { outline: 1px solid #ccc; margin-bottom: 2rem; }
+      #results { font: 13px/1.5 monospace; white-space: pre; padding: 1rem; }
+    </style>
+    <script src="runner.js"></script>
+  </head>
+  <body>
+    <div id="fixtures"></div>
+
+    <script>
+      const { test, assert, assertNear, el, kids, rem, px, style, sameRow, distinctRows } = LR;
+
+      // ======================================================================
+      // switcher — Tier 2: knob resolution + cascade contracts
+      // ======================================================================
+
+      test("switcher: .lr-gap-lg resolves gap to 1.5rem", () => {
+        const s = el(`<div class="lr-switcher lr-gap-lg"><div>a</div><div>b</div></div>`);
+        assertNear("switcher gap == lr-space-lg", px(s, "rowGap"), rem(1.5));
+      });
+
+      test("switcher: inline --gap beats the modifier class", () => {
+        const s = el(`<div class="lr-switcher lr-gap-lg" style="--gap:2rem"><div>a</div><div>b</div></div>`);
+        assertNear("inline --gap wins", px(s, "rowGap"), rem(2));
+      });
+
+      test("switcher: --gap does NOT inherit into a nested layout", () => {
+        // --gap is registered inherits:false, so the inner stack must fall back
+        // to its own 1rem default, not pick up the outer 3rem.
+        const outer = el(`<div class="lr-stack" style="--gap:3rem"><div class="lr-stack"><div>a</div><div>b</div></div></div>`);
+        const inner = outer.firstElementChild;
+        assertNear("nested gap is default, not inherited", px(inner, "rowGap"), rem(1));
+      });
+
+      // ======================================================================
+      // switcher — Tier 3: container-driven flip (no media queries)
+      // ======================================================================
+
+      test("switcher: one row above --threshold (30rem)", () => {
+        const s = el(`<div class="lr-switcher"><div>a</div><div>b</div><div>c</div></div>`);
+        s.style.width = "800px"; // > 480px threshold
+        assert("3 peers share a row", sameRow(kids(s)), tops(s));
+      });
+
+      test("switcher: stacks below --threshold (30rem)", () => {
+        const s = el(`<div class="lr-switcher"><div>a</div><div>b</div><div>c</div></div>`);
+        s.style.width = "300px"; // < 480px threshold
+        assert("3 peers each on their own row", distinctRows(kids(s)), tops(s));
+      });
+
+      // ======================================================================
+      // flank-start — Tier 2: the --flank-basis inheritance contract
+      // ======================================================================
+
+      test("flank-start: sidebar picks up inherited --flank-basis", () => {
+        // --flank-basis is the one inherits:true knob: set on an ancestor, every
+        // nested flank's sidebar adopts it.
+        const host = el(`<div style="--flank-basis:10rem"><div class="lr-flank-start"><div>side</div><div>main</div></div></div>`);
+        const sidebar = host.firstElementChild.firstElementChild;
+        assertNear("sidebar basis == inherited flank-basis", px(sidebar, "flexBasis"), rem(10));
+      });
+
+      test("flank-start: per-instance --side beats inherited --flank-basis", () => {
+        const host = el(`<div style="--flank-basis:10rem"><div class="lr-flank-start" style="--side:5rem"><div>side</div><div>main</div></div></div>`);
+        const sidebar = host.firstElementChild.firstElementChild;
+        assertNear("--side wins over --flank-basis", px(sidebar, "flexBasis"), rem(5));
+      });
+
+      // ======================================================================
+      // flank-start — Tier 3: wraps to stacked when main can't hold content-min
+      // ======================================================================
+
+      test("flank-start: side-by-side when wide", () => {
+        const f = el(`<div class="lr-flank-start"><div>side</div><div>main</div></div>`);
+        f.style.width = "900px";
+        assert("sidebar + main on one row", sameRow(kids(f)), tops(f));
+      });
+
+      test("flank-start: stacks when narrow", () => {
+        // 16rem sidebar + 50% content-min + gap can't coexist at 300px → wrap.
+        const f = el(`<div class="lr-flank-start"><div>side</div><div>main</div></div>`);
+        f.style.width = "300px";
+        assert("sidebar + main stacked", distinctRows(kids(f)), tops(f));
+      });
+
+      // little detail helper for failure messages
+      function tops(node) {
+        return "offsetTops=[" + kids(node).map((k) => k.offsetTop).join(", ") + "]";
+      }
+    </script>
+  </body>
+</html>

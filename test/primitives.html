@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LRLayout tests — primitives</title>
+    <link rel="stylesheet" href="../dist/lrlayout.css" />
+    <style>
+      /* margin:0 so getBoundingClientRect math is relative to a clean origin. */
+      body { margin: 0; }
+      #fixtures > * { margin-bottom: 2rem; }
+      #results { font: 13px/1.5 monospace; white-space: pre; padding: 1rem; }
+    </style>
+    <script src="runner.js"></script>
+  </head>
+  <body>
+    <div id="fixtures"></div>
+
+    <script>
+      const { test, assert, assertNear, assertEq, el, kids, rem, style, px, rect, colCount, sameRow, distinctRows } = LR;
+
+      // ======================================================================
+      // cluster — wrapping flex row, centered cross-axis by default
+      // ======================================================================
+      test("cluster: flex row, wrap, center cross-axis, start main-axis", () => {
+        const c = el(`<div class="lr-cluster"><span>a</span><span>b</span></div>`);
+        assertEq("display", style(c, "display"), "flex");
+        assertEq("flex-wrap default wrap", style(c, "flexWrap"), "wrap");
+        assertEq("align-items default center", style(c, "alignItems"), "center");
+        assertEq("justify-content default flex-start", style(c, "justifyContent"), "flex-start");
+      });
+
+      test("cluster: items wrap onto new rows as space runs out", () => {
+        const c = el(`<div class="lr-cluster" style="width:200px">
+          <span style="display:block;width:80px;height:20px"></span>
+          <span style="display:block;width:80px;height:20px"></span>
+          <span style="display:block;width:80px;height:20px"></span></div>`);
+        const k = kids(c); // 80+16+80 fits 200; third wraps.
+        assert("first two share a row", k[0].offsetTop === k[1].offsetTop);
+        assert("third wraps below", k[2].offsetTop > k[0].offsetTop);
+      });
+
+      // ======================================================================
+      // split — pushes children to opposite ends (space-between)
+      // ======================================================================
+      test("split: justify-content space-between", () => {
+        const s = el(`<div class="lr-split"><span>L</span><span>R</span></div>`);
+        assertEq("justify-content", style(s, "justifyContent"), "space-between");
+      });
+
+      test("split: children pinned to opposite edges", () => {
+        const s = el(`<div class="lr-split" style="width:600px"><span>L</span><span>R</span></div>`);
+        const k = kids(s), box = rect(s);
+        assertNear("left child at left edge", rect(k[0]).left, box.left);
+        assertNear("right child at right edge", rect(k[1]).right, box.right);
+      });
+
+      // ======================================================================
+      // stack — vertical flow, gap between items only
+      // ======================================================================
+      test("stack: flex column", () => {
+        const s = el(`<div class="lr-stack"><div>a</div><div>b</div></div>`);
+        assertEq("display", style(s, "display"), "flex");
+        assertEq("flex-direction column", style(s, "flexDirection"), "column");
+      });
+
+      test("stack: default --gap (1rem) sits between items", () => {
+        const s = el(`<div class="lr-stack"><div style="height:20px">a</div><div style="height:20px">b</div></div>`);
+        const k = kids(s);
+        const between = k[1].offsetTop - (k[0].offsetTop + k[0].offsetHeight);
+        assertNear("inter-item gap == 1rem", between, rem(1));
+      });
+
+      // ======================================================================
+      // center — capped, auto-centered content column (stays a block)
+      // ======================================================================
+      test("center: stays a plain block so it composes", () => {
+        const c = el(`<div style="width:1200px"><div class="lr-center">x</div></div>`);
+        assertEq("display block", style(c.firstElementChild, "display"), "block");
+      });
+
+      test("center: caps at --max (60rem) and centers in its container", () => {
+        const host = el(`<div style="width:1200px"><div class="lr-center">x</div></div>`);
+        const c = host.firstElementChild, hb = rect(host), cb = rect(c);
+        assertNear("width capped at 60rem", cb.width, rem(60));
+        assertNear("centered: equal side margins", cb.left - hb.left, (hb.width - cb.width) / 2);
+      });
+
+      test("center: --max override changes the cap", () => {
+        const host = el(`<div style="width:1200px"><div class="lr-center" style="--max:20rem">x</div></div>`);
+        assertNear("width == 20rem", rect(host.firstElementChild).width, rem(20));
+      });
+
+      // ======================================================================
+      // grid — auto-fit columns that reflow with container width
+      // ======================================================================
+      test("grid: display grid", () => {
+        const g = el(`<div class="lr-grid"><div>a</div></div>`);
+        assertEq("display", style(g, "display"), "grid");
+      });
+
+      test("grid: auto-fits 3 columns at 800px (--min 16rem)", () => {
+        const g = el(`<div class="lr-grid" style="width:800px">${"<div>x</div>".repeat(6)}</div>`);
+        assertEq("3 columns", colCount(kids(g)), 3);
+      });
+
+      test("grid: collapses to 1 column when narrower than --min", () => {
+        const g = el(`<div class="lr-grid" style="width:300px">${"<div>x</div>".repeat(6)}</div>`);
+        assertEq("1 column", colCount(kids(g)), 1);
+      });
+
+      test("grid: --cols pins a fixed column count", () => {
+        const g = el(`<div class="lr-grid" style="--cols:2;width:800px">${"<div>x</div>".repeat(6)}</div>`);
+        assertEq("2 columns", colCount(kids(g)), 2);
+      });
+
+      // ======================================================================
+      // frame — fixed aspect-ratio media box
+      // ======================================================================
+      const PIX = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+      test("frame: derives height from --ratio (16/9)", () => {
+        const f = el(`<div class="lr-frame" style="width:320px"><img src="${PIX}" alt=""></div>`);
+        assertNear("height == width * 9/16", f.offsetHeight, 320 * 9 / 16);
+      });
+
+      test("frame: media fills the box and object-fit:cover", () => {
+        const f = el(`<div class="lr-frame" style="width:320px"><img src="${PIX}" alt=""></div>`);
+        const img = f.firstElementChild;
+        assertNear("img fills width", img.offsetWidth, 320);
+        assertNear("img fills height", img.offsetHeight, 180);
+        assertEq("object-fit cover", style(img, "objectFit"), "cover");
+      });
+
+      test("frame: --ratio override", () => {
+        const f = el(`<div class="lr-frame" style="width:200px;--ratio:1 / 1"><img src="${PIX}" alt=""></div>`);
+        assertNear("square", f.offsetHeight, 200);
+      });
+
+      // ======================================================================
+      // cover — block-axis centering with edge-anchored header/footer
+      // ======================================================================
+      test("cover: flex column, honours --min block size", () => {
+        const c = el(`<div class="lr-cover" style="--min:400px"><div style="height:40px">only</div></div>`);
+        assertEq("display flex", style(c, "display"), "flex");
+        assertEq("flex-direction column", style(c, "flexDirection"), "column");
+        assertNear("min-block-size", c.offsetHeight, 400);
+      });
+
+      test("cover: lone child centers on the block axis", () => {
+        const c = el(`<div class="lr-cover" style="--min:400px"><div style="height:40px">only</div></div>`);
+        const cb = rect(c), kb = rect(c.firstElementChild);
+        assertNear("child vertically centered", kb.top - cb.top, (cb.height - kb.height) / 2);
+      });
+
+      test("cover: header/footer hit the edges, marked child stays centered", () => {
+        const c = el(`<div class="lr-cover" style="--min:400px">
+          <div style="height:30px">head</div>
+          <div class="lr-cover-center" style="height:40px">mid</div>
+          <div style="height:30px">foot</div></div>`);
+        const cb = rect(c), k = kids(c);
+        assertNear("header at top edge", rect(k[0]).top, cb.top);
+        assertNear("footer at bottom edge", rect(k[2]).bottom, cb.bottom);
+        assertNear("center stays at container middle", rect(k[1]).top - cb.top, (cb.height - rect(k[1]).height) / 2);
+      });
+
+      // ======================================================================
+      // overlay — a child floated out of flow, centered then placeable
+      // ======================================================================
+      test("overlay: host is a positioning context, item is absolute", () => {
+        const o = el(`<div class="lr-overlay" style="width:200px;height:200px"><div class="lr-overlay-item">x</div></div>`);
+        assertEq("host position relative", style(o, "position"), "relative");
+        assertEq("item position absolute", style(o.firstElementChild, "position"), "absolute");
+      });
+
+      test("overlay: item centered on both axes by default", () => {
+        const o = el(`<div class="lr-overlay" style="width:200px;height:200px"><div class="lr-overlay-item" style="width:40px;height:20px">x</div></div>`);
+        const ob = rect(o), ib = rect(o.firstElementChild);
+        assertNear("centered x", ib.left - ob.left, (ob.width - ib.width) / 2);
+        assertNear("centered y", ib.top - ob.top, (ob.height - ib.height) / 2);
+      });
+
+      test("overlay: top+start pins to the corner", () => {
+        const o = el(`<div class="lr-overlay" style="width:200px;height:200px"><div class="lr-overlay-item lr-overlay-top lr-overlay-start" style="width:40px;height:20px">x</div></div>`);
+        const ob = rect(o), ib = rect(o.firstElementChild);
+        assertNear("pinned left", ib.left - ob.left, 0);
+        assertNear("pinned top", ib.top - ob.top, 0);
+      });
+
+      test("overlay: --inset offsets a pinned corner", () => {
+        const o = el(`<div class="lr-overlay" style="width:200px;height:200px"><div class="lr-overlay-item lr-overlay-top lr-overlay-start" style="--inset:10px;width:40px;height:20px">x</div></div>`);
+        const ob = rect(o), ib = rect(o.firstElementChild);
+        assertNear("inset from left", ib.left - ob.left, 10);
+        assertNear("inset from top", ib.top - ob.top, 10);
+      });
+
+      // ======================================================================
+      // flank-end — mirror of flank-start (sidebar trailing)
+      // ======================================================================
+      test("flank-end: sidebar is the last child, 16rem default", () => {
+        const f = el(`<div class="lr-flank-end"><div>main</div><div>side</div></div>`);
+        assertNear("last child basis == 16rem", px(kids(f)[1], "flexBasis"), rem(16));
+      });
+
+      test("flank-end: side-by-side when wide, stacked when narrow", () => {
+        const f = el(`<div class="lr-flank-end"><div>main</div><div>side</div></div>`);
+        f.style.width = "900px";
+        assert("one row when wide", sameRow(kids(f)));
+        f.style.width = "300px";
+        assert("stacked when narrow", distinctRows(kids(f)));
+      });
+
+      // ======================================================================
+      // flank-both — two sidebars, flexible centre, progressive wrap
+      // ======================================================================
+      test("flank-both: both sidebars take --side (16rem) by default", () => {
+        const f = el(`<div class="lr-flank-both"><div>S</div><div>main</div><div>E</div></div>`);
+        const k = kids(f);
+        assertNear("start sidebar basis", px(k[0], "flexBasis"), rem(16));
+        assertNear("end sidebar basis", px(k[2], "flexBasis"), rem(16));
+      });
+
+      test("flank-both: --side-start / --side-end override each end", () => {
+        const f = el(`<div class="lr-flank-both" style="--side-start:10rem;--side-end:5rem"><div>S</div><div>main</div><div>E</div></div>`);
+        const k = kids(f);
+        assertNear("start basis", px(k[0], "flexBasis"), rem(10));
+        assertNear("end basis", px(k[2], "flexBasis"), rem(5));
+      });
+
+      test("flank-both: progressive wrap [S|main|E] → [S|main]/[E] → stacked", () => {
+        const f = el(`<div class="lr-flank-both"><div>S</div><div>main</div><div>E</div></div>`);
+        f.style.width = "1200px";
+        assert("all three share a row when wide", sameRow(kids(f)));
+        f.style.width = "700px"; // S+main hold the first row, E drops
+        const k = kids(f);
+        assert("mid stage: S and main together", k[0].offsetTop === k[1].offsetTop);
+        assert("mid stage: E wrapped below", k[2].offsetTop > k[1].offsetTop);
+        f.style.width = "250px";
+        assert("all three stacked when narrow", distinctRows(kids(f)));
+      });
+    </script>
+  </body>
+</html>
