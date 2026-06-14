@@ -23,8 +23,11 @@ Classic intrinsic-layout primitives with no current equivalent.
   plus a `.lr-overlay-item` child, centered by default with
   `top`/`bottom`/`start`/`end` placement modifiers and a `.lr-overlay-contain`
   option. See the `overlay` section in `README.md`.
-- **two-sided flank** — `flank` is single-sidebar only; no sidebar-both-ends
-  layout.
+- ~~**two-sided flank**~~ — *shipped* as `.lr-flank-both`. Alongside the rename of
+  the single-sided variants to `.lr-flank-start` / `.lr-flank-end` (there is no
+  bare `.lr-flank`), a third variant puts a sidebar at each end of a flexible
+  centre, wrapping progressively. Adds `--side-start` / `--side-end` knobs. See
+  the `flank` section in `README.md`.
 
 ## Gaps inside existing primitives
 

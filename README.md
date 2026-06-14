@@ -174,19 +174,22 @@ Knobs: `--ratio` (16 / 9) · `--object` (cover) · `--pad` (0)
 ### flank
 
 A sidebar of intrinsic width beside a flexible main region. Wraps to stacked when
-the main region would fall below `--content-min` — no media queries. Add
-`.lr-flank-end` to move the sidebar to the trailing side without changing the
-markup order.
+the main region would fall below `--content-min` — no media queries. Comes in
+three variants, each used on its own (there is no bare `.lr-flank`):
+
+- `.lr-flank-start` — sidebar on the leading edge, main after it.
+- `.lr-flank-end` — sidebar on the trailing edge, main before it.
+- `.lr-flank-both` — a sidebar at each end with a flexible centre (three children).
 
 ```html
-<div class="lr-flank" style="--side: 14rem">
+<div class="lr-flank-start" style="--side: 14rem">
   <aside>Sidebar</aside>
   <main>Main content…</main>
 </div>
 ```
 
-Knobs: `--side` (16rem) · `--flank-basis` (16rem, inherits) · `--content-min` (50%) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
-Modifier: `.lr-flank-end`
+Knobs: `--side` (16rem) · `--side-start` / `--side-end` (`-both` only, fall back to `--side`) · `--flank-basis` (16rem, inherits) · `--content-min` (50%) · `--gap` (md) · `--items` (stretch) · `--pad` (0)
+Variants: `.lr-flank-start` · `.lr-flank-end` · `.lr-flank-both`
 
 `--side` sizes the sidebar on a single flank. `--flank-basis` does the same but
 **inherits**, so setting it once on an ancestor — say a `<form>` — gives every
@@ -196,9 +199,23 @@ labels: make each `<label>` a flank and set the column width on the form.
 
 ```html
 <form class="lr-stack lr-gap-md" style="--flank-basis: 8rem">
-  <label class="lr-flank lr-items-center"><span>Full name</span><input /></label>
-  <label class="lr-flank lr-items-center"><span>Email address</span><input /></label>
+  <label class="lr-flank-start lr-items-center"><span>Full name</span><input /></label>
+  <label class="lr-flank-start lr-items-center"><span>Email address</span><input /></label>
 </form>
+```
+
+`.lr-flank-both` flanks the centre on both sides. It expects exactly three element
+children — start sidebar, main, end sidebar — and wraps progressively as space
+tightens: the trailing rail drops below first, then the leading one, ending fully
+stacked in source order. Size both rails together with `--side`, or independently
+with `--side-start` / `--side-end` (each falls back to `--side`).
+
+```html
+<div class="lr-flank-both" style="--side-start: 9rem; --side-end: 13rem">
+  <nav>Nav rail</nav>
+  <main>Main content…</main>
+  <aside>Aside</aside>
+</div>
 ```
 
 ### grid

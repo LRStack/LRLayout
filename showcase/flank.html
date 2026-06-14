@@ -41,7 +41,7 @@
         <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
           <h2>Sidebar + main</h2>
           <p class="note">
-            A plain <code>.lr-flank</code>. The first child is the sidebar
+            A plain <code>.lr-flank-start</code>. The first child is the sidebar
             (<code>--side</code> wide), the second fills the rest.
           </p>
         </div>
@@ -49,7 +49,7 @@
           <p class="callout lr-cluster lr-items-baseline lr-gap-sm">
             Narrow the window until the sidebar drops below the main region.
           </p>
-          <div class="lr-flank">
+          <div class="lr-flank-start">
             <div class="panel">Sidebar</div>
             <div class="panel panel--main">Main content</div>
           </div>
@@ -65,9 +65,33 @@
           </p>
         </div>
         <div class="stage lr-stack lr-gap-sm lr-pad-lg">
-          <div class="lr-flank lr-flank-end">
+          <div class="lr-flank-end">
             <div class="panel panel--main">Main content</div>
             <div class="panel">Sidebar</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <div class="demo__head lr-stack lr-gap-xs lr-pad-lg">
+          <h2>Sidebars at both ends</h2>
+          <p class="note">
+            <code>.lr-flank-both</code> takes three children — a sidebar, the
+            main region, and a second sidebar — and flanks the flexible centre on
+            both sides. As the row narrows it wraps progressively: the trailing
+            sidebar drops first, then the leading one, ending fully stacked in
+            source order. <code>--side-start</code> and <code>--side-end</code>
+            size the two rails independently; both fall back to <code>--side</code>.
+          </p>
+        </div>
+        <div class="stage lr-stack lr-gap-sm lr-pad-lg">
+          <div
+            class="lr-flank-both"
+            style="--side-start: 9rem; --side-end: 13rem; --content-min: 30%"
+          >
+            <aside class="panel">Nav rail</aside>
+            <div class="panel panel--main">Main content</div>
+            <aside class="panel">Aside</aside>
           </div>
         </div>
       </section>
@@ -83,7 +107,7 @@
           </p>
         </div>
         <div class="stage lr-stack lr-gap-sm lr-pad-lg">
-          <div class="lr-flank" style="--side: 10rem; --content-min: 70%">
+          <div class="lr-flank-start" style="--side: 10rem; --content-min: 70%">
             <div class="panel">Rail</div>
             <div class="panel panel--main">Main content</div>
           </div>
@@ -103,7 +127,7 @@
         <div class="stage lr-stack lr-gap-sm lr-pad-lg">
           <div class="scrollbox lr-scroll-y">
             <div
-              class="lr-flank lr-pad-sm"
+              class="lr-flank-start lr-pad-sm"
               style="--side: 10rem; --content-min: 60%"
             >
               <aside class="panel lr-sticky" style="--sticky-top: 0.75rem">
@@ -129,7 +153,7 @@
           <h2>Form rows: aligned labels</h2>
           <p class="note">
             Each row is a <code>&lt;label&gt;</code> that is itself a
-            <code>.lr-flank</code> — the label text is the sidebar, the field
+            <code>.lr-flank-start</code> — the label text is the sidebar, the field
             fills the rest. The <code>&lt;form&gt;</code> is an
             <code>.lr-stack</code>. Setting <code>--flank-basis</code> once on the
             form sizes every row's label column to the same width, so they line
@@ -143,11 +167,11 @@
             Narrow the window — each label wraps above its field.
           </p>
           <form class="lr-stack lr-gap-md" style="--flank-basis: 8rem">
-            <label class="lr-flank lr-items-center lr-gap-sm">
+            <label class="lr-flank-start lr-items-center lr-gap-sm">
               <span class="field-label">Full name</span>
               <input class="field" type="text" name="name" autocomplete="name" />
             </label>
-            <label class="lr-flank lr-items-center lr-gap-sm">
+            <label class="lr-flank-start lr-items-center lr-gap-sm">
               <span class="field-label">Email address</span>
               <input
                 class="field"
@@ -156,7 +180,7 @@
                 autocomplete="email"
               />
             </label>
-            <label class="lr-flank lr-items-center lr-gap-sm">
+            <label class="lr-flank-start lr-items-center lr-gap-sm">
               <span class="field-label">Company</span>
               <input
                 class="field"
@@ -165,7 +189,7 @@
                 autocomplete="organization"
               />
             </label>
-            <label class="lr-flank lr-items-start lr-gap-sm">
+            <label class="lr-flank-start lr-items-start lr-gap-sm">
               <span class="field-label">Message</span>
               <textarea class="field" name="message" rows="3"></textarea>
             </label>

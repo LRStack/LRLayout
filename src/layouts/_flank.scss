@@ -1,60 +1,104 @@
 // =============================================================================
 // Flank
 // -----------------------------------------------------------------------------
-// A sidebar flanking a flexible main region. The sidebar takes an intrinsic
-// width (--side) while the main region fills the rest; once the main region can
-// no longer hold at least --content-min of the row, the two wrap to stacked.
-// No media queries — the switch is driven purely by available space.
+// A sidebar of intrinsic width flanking a flexible main region. The sidebar
+// takes a preferred width (--side) while the main region fills the rest; once
+// the main region can no longer hold at least --content-min of the row, the two
+// wrap to stacked. No media queries — the switch is driven purely by available
+// space.
 //
-// Source order is sidebar-first. Add .lr-flank-end to move the sidebar to the
-// other side without changing the markup order.
+// Three parallel variants, used one at a time (there is no bare .lr-flank):
+//   .lr-flank-start — one sidebar on the leading edge, main after it.
+//   .lr-flank-end   — one sidebar on the trailing edge, main before it.
+//   .lr-flank-both  — a sidebar at each end with a flexible centre. Expects
+//                     exactly three element children: start sidebar, main, end
+//                     sidebar. As space tightens it wraps progressively —
+//                     [S | main | E] → [S | main] / [E] → [S] / [main] / [E] —
+//                     stacking in source order, no media queries.
 //
-// Knobs: --side (sidebar width, per-instance), --flank-basis (sidebar width that
-//        *inherits* — set it once on an ancestor, e.g. a <form>, and every
-//        nested flank picks up the same width; handy for aligning a column of
-//        form labels. --side still wins when both are set), --content-min (wrap
-//        threshold), --gap, --items (align-items), --pad.
+// Knobs: --side (sidebar width, per-instance), --side-start / --side-end (on
+//        -both only: override one end's width, each falling back to --side),
+//        --flank-basis (sidebar width that *inherits* — set it once on an
+//        ancestor, e.g. a <form>, and every nested flank picks up the same
+//        width; handy for aligning a column of form labels. --side still wins
+//        when both are set), --content-min (wrap threshold), --gap, --items
+//        (align-items), --pad.
+//
+// Why the --lr-* indirection below: --side / --side-start / --side-end /
+// --content-min are read on the flex *children*, but the public knobs are
+// registered `inherits: false` (so a knob set on one layout never leaks into a
+// nested one). A non-inherited custom property set on the container would not
+// reach the child, so var(--side) there would silently fall back to the literal.
+// Each variant therefore re-exposes the resolved value as an *inheriting* --lr-*
+// var on the container; the child reads that. Because every flank container
+// re-declares these, the inheriting value still can't escape a nested flank.
 // =============================================================================
 
 @layer lrlayout.layouts {
-  .lr-flank {
+  // Shared container — every variant is the same wrapping flex row.
+  .lr-flank-start,
+  .lr-flank-end,
+  .lr-flank-both {
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     align-items: var(--items, stretch);
     gap: var(--gap, var(--lr-space-md));
     padding: var(--pad, 0);
+
+    // Child-read knobs, resolved here and handed down as inheriting vars.
+    --lr-side: var(--side, var(--flank-basis, 16rem));
+    --lr-side-start: var(--side-start, var(--lr-side));
+    --lr-side-end: var(--side-end, var(--lr-side));
+    --lr-content-min: var(--content-min, 50%);
   }
 
+  // --- One sidebar, leading side --------------------------------------------
   // Sidebar (first child): a preferred width that can shrink/grow to fill a row.
-  // Width resolves per-instance --side first, then an inherited --flank-basis
-  // (so one declaration on an ancestor can size a whole column of flanks), then
-  // the literal default.
-  .lr-flank > :first-child {
-    flex-basis: var(--side, var(--flank-basis, 16rem));
+  .lr-flank-start > :first-child {
+    flex-basis: var(--lr-side);
     flex-grow: 1;
   }
 
   // Main region (last child): soaks up the remaining space, but refuses to drop
   // below --content-min, forcing a wrap instead.
-  .lr-flank > :last-child {
+  .lr-flank-start > :last-child {
     flex-basis: 0;
     flex-grow: 999;
-    min-inline-size: var(--content-min, 50%);
+    min-inline-size: var(--lr-content-min);
   }
 
-  // --- Sidebar on the trailing side -----------------------------------------
-  // Swap the roles: content becomes the first child, sidebar the last. Declared
-  // after the base rules so it wins on source order at equal specificity.
+  // --- One sidebar, trailing side -------------------------------------------
+  // The same layout mirrored: main is the first child, sidebar the last.
   .lr-flank-end > :first-child {
     flex-basis: 0;
     flex-grow: 999;
-    min-inline-size: var(--content-min, 50%);
+    min-inline-size: var(--lr-content-min);
   }
 
   .lr-flank-end > :last-child {
-    flex-basis: var(--side, var(--flank-basis, 16rem));
+    flex-basis: var(--lr-side);
     flex-grow: 1;
-    min-inline-size: auto; // clear the base rule's content-min on the sidebar
+  }
+
+  // --- Sidebars at both ends, flexible centre -------------------------------
+  // Exactly three children. The two flanking sidebars share --side, with
+  // --side-start / --side-end overriding either end independently.
+  .lr-flank-both > :first-child {
+    flex-basis: var(--lr-side-start);
+    flex-grow: 1;
+  }
+
+  .lr-flank-both > :last-child {
+    flex-basis: var(--lr-side-end);
+    flex-grow: 1;
+  }
+
+  // The centre (middle child) soaks up the remaining space and holds the wrap
+  // threshold, exactly like the main region of a single-sided flank.
+  .lr-flank-both > :nth-child(2) {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: var(--lr-content-min);
   }
 }

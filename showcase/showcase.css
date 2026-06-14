@@ -206,7 +206,7 @@ code {
 
 /* --- Form rows (flank demo) ----------------------------------------------- */
 /* Cosmetic only. The arrangement is the library's job: each <label> is an
-   .lr-flank (label text = sidebar, field = main) and the <form> is an .lr-stack.
+   .lr-flank-start (label text = sidebar, field = main) and the <form> is an .lr-stack.
    These rules just make the controls legible. No widths here — the field fills
    the flank's main region and the label column width comes from --flank-basis in
    the markup. */
